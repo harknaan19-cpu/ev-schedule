@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Shift, ClubBooking } from './types';
 import { onValue, shiftsRef, clubBookingsRef } from './firebase';
 import ShiftForm from './components/ShiftForm';
@@ -9,13 +9,19 @@ import { getShiftTimes } from './utils/dateTime';
 
 type Tab = 'charging' | 'club';
 
+const MONTH_NAMES = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('charging');
-  const [shifts, setShifts] = useState<Shift[]>([]);
-  const [bookings, setBookings] = useState<ClubBooking[]>([]);
+  const [allShifts, setAllShifts] = useState<Shift[]>([]);
+  const [allBookings, setAllBookings] = useState<ClubBooking[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingBookings, setLoadingBookings] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [historyMonth, setHistoryMonth] = useState<number | null>(new Date().getMonth());
+  const [historyYear, setHistoryYear] = useState<number | null>(new Date().getFullYear());
+  const [showStats, setShowStats] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem('theme') === 'dark';
   });
@@ -34,16 +40,11 @@ const App: React.FC = () => {
     const unsubscribe = onValue(shiftsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const now = new Date();
         const shiftList: Shift[] = Object.entries(data).map(([id, val]: [string, any]) => ({ id, ...val }));
-        const filtered = shiftList.filter(shift => {
-          const { end } = getShiftTimes(shift.scheduledDate, shift.startTime, shift.endTime);
-          return end > now;
-        });
-        filtered.sort((a, b) => a.timestamp - b.timestamp);
-        setShifts(filtered);
+        shiftList.sort((a, b) => a.timestamp - b.timestamp);
+        setAllShifts(shiftList);
       } else {
-        setShifts([]);
+        setAllShifts([]);
       }
       setLoading(false);
     });
@@ -54,17 +55,11 @@ const App: React.FC = () => {
     const unsubscribe = onValue(clubBookingsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const now = new Date();
-        now.setHours(0, 0, 0, 0);
         const list: ClubBooking[] = Object.entries(data).map(([id, val]: [string, any]) => ({ id, ...val }));
-        const filtered = list.filter(b => {
-          const [dd, mm, yy] = b.scheduledDate.split('/').map(Number);
-          return new Date(yy, mm - 1, dd) >= now;
-        });
-        filtered.sort((a, b) => a.timestamp - b.timestamp);
-        setBookings(filtered);
+        list.sort((a, b) => a.timestamp - b.timestamp);
+        setAllBookings(list);
       } else {
-        setBookings([]);
+        setAllBookings([]);
       }
       setLoadingBookings(false);
     });
@@ -72,6 +67,76 @@ const App: React.FC = () => {
   }, []);
 
   const handleSuccess = () => setIsModalOpen(false);
+
+  // Filter current vs history
+  const now = new Date();
+  const currentShifts = allShifts.filter(shift => {
+    const { end } = getShiftTimes(shift.scheduledDate, shift.startTime, shift.endTime);
+    return end > now;
+  });
+
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+  const currentBookings = allBookings.filter(b => {
+    const [dd, mm, yy] = b.scheduledDate.split('/').map(Number);
+    return new Date(yy, mm - 1, dd) >= todayStart;
+  });
+
+  // Helper to check if a DD/MM/YYYY date matches selected month/year
+  const matchesMonthYear = (dateStr: string) => {
+    const [, mm, yy] = dateStr.split('/').map(Number);
+    if (historyYear !== null && yy !== historyYear) return false;
+    if (historyMonth !== null && mm - 1 !== historyMonth) return false;
+    return true;
+  };
+
+  const historyShifts = useMemo(() =>
+    allShifts.filter(s => {
+      const { end } = getShiftTimes(s.scheduledDate, s.startTime, s.endTime);
+      return end <= now && matchesMonthYear(s.scheduledDate);
+    }).reverse(),
+    [allShifts, historyMonth, historyYear]
+  );
+
+  const historyBookings = useMemo(() =>
+    allBookings.filter(b => {
+      const [dd, mm, yy] = b.scheduledDate.split('/').map(Number);
+      return new Date(yy, mm - 1, dd) < todayStart && matchesMonthYear(b.scheduledDate);
+    }).reverse(),
+    [allBookings, historyMonth, historyYear]
+  );
+
+  const shifts = showHistory ? historyShifts : currentShifts;
+  const bookings = showHistory ? historyBookings : currentBookings;
+
+  // Usage stats for history mode
+  const usageStats = useMemo(() => {
+    const items = activeTab === 'charging' ? historyShifts : historyBookings;
+    const counts: Record<string, number> = {};
+    for (const item of items) {
+      const name = activeTab === 'charging' ? (item as Shift).username : (item as ClubBooking).name;
+      counts[name] = (counts[name] || 0) + 1;
+    }
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1]);
+  }, [activeTab, historyShifts, historyBookings]);
+
+  const maxUsage = usageStats.length > 0 ? usageStats[0][1] : 0;
+
+  // Available years from data
+  const availableYears = useMemo(() => {
+    const years = new Set<number>();
+    for (const s of allShifts) {
+      const y = parseInt(s.scheduledDate.split('/')[2]);
+      if (y) years.add(y);
+    }
+    for (const b of allBookings) {
+      const y = parseInt(b.scheduledDate.split('/')[2]);
+      if (y) years.add(y);
+    }
+    years.add(new Date().getFullYear());
+    return [...years].sort();
+  }, [allShifts, allBookings]);
 
   const isLoading = activeTab === 'charging' ? loading : loadingBookings;
   const count = activeTab === 'charging' ? shifts.length : bookings.length;
@@ -120,7 +185,7 @@ const App: React.FC = () => {
         {/* Tabs */}
         <div className="flex gap-2 mb-6 md:mb-8 bg-white dark:bg-zinc-800 p-1.5 rounded-2xl border border-slate-200/60 dark:border-zinc-700/50 shadow-sm">
           <button
-            onClick={() => setActiveTab('charging')}
+            onClick={() => { setActiveTab('charging'); setShowHistory(false); }}
             className={`flex-1 py-2.5 md:py-3 px-4 rounded-xl font-black text-sm md:text-base transition-all ${
               activeTab === 'charging'
                 ? 'bg-slate-900 dark:bg-sky-500 text-white shadow-lg'
@@ -130,7 +195,7 @@ const App: React.FC = () => {
             ⚡ עמדת טעינה
           </button>
           <button
-            onClick={() => setActiveTab('club')}
+            onClick={() => { setActiveTab('club'); setShowHistory(false); }}
             className={`flex-1 py-2.5 md:py-3 px-4 rounded-xl font-black text-sm md:text-base transition-all ${
               activeTab === 'club'
                 ? 'bg-slate-900 dark:bg-sky-500 text-white shadow-lg'
@@ -144,12 +209,92 @@ const App: React.FC = () => {
         <section>
           <div className="flex items-center justify-between mb-4 md:mb-8">
             <h2 className="text-xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              {activeTab === 'charging' ? 'משמרות קרובות' : 'הזמנות מועדון'}
+              {showHistory
+                ? (activeTab === 'charging' ? 'היסטוריית משמרות' : 'היסטוריית הזמנות')
+                : (activeTab === 'charging' ? 'משמרות קרובות' : 'הזמנות מועדון')
+              }
             </h2>
-            <div className="text-[9px] md:text-[10px] font-black text-sky-500 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/20 px-3 md:px-4 py-1.5 md:py-2 rounded-2xl border border-sky-100 dark:border-sky-900/30 uppercase tracking-[0.2em]">
-              {count} רשומות
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className={`text-[10px] md:text-xs font-black px-3 md:px-4 py-1.5 md:py-2 rounded-2xl border transition-all ${
+                  showHistory
+                    ? 'bg-slate-900 dark:bg-sky-500 text-white border-transparent'
+                    : 'text-slate-400 dark:text-slate-500 bg-white dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 hover:border-slate-300 dark:hover:border-zinc-600'
+                }`}
+              >
+                📜 היסטוריה
+              </button>
+              <div className="text-[9px] md:text-[10px] font-black text-sky-500 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/20 px-3 md:px-4 py-1.5 md:py-2 rounded-2xl border border-sky-100 dark:border-sky-900/30 uppercase tracking-[0.2em]">
+                {count} רשומות
+              </div>
             </div>
           </div>
+
+          {/* History filters */}
+          {showHistory && (
+            <div className="mb-4 md:mb-6 space-y-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                <select
+                  value={historyMonth === null ? 'all' : historyMonth}
+                  onChange={(e) => setHistoryMonth(e.target.value === 'all' ? null : Number(e.target.value))}
+                  className="px-3 py-2 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl text-sm font-bold text-slate-900 dark:text-white shadow-sm outline-none"
+                >
+                  <option value="all">כל השנה</option>
+                  {MONTH_NAMES.map((m, i) => (
+                    <option key={i} value={i}>{m}</option>
+                  ))}
+                </select>
+                <select
+                  value={historyYear === null ? 'all' : historyYear}
+                  onChange={(e) => setHistoryYear(e.target.value === 'all' ? null : Number(e.target.value))}
+                  className="px-3 py-2 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl text-sm font-bold text-slate-900 dark:text-white shadow-sm outline-none"
+                >
+                  <option value="all">כל השנים</option>
+                  {availableYears.map(y => (
+                    <option key={y} value={y}>{y}</option>
+                  ))}
+                </select>
+                <button
+                  onClick={() => setShowStats(!showStats)}
+                  className={`mr-auto text-[10px] md:text-xs font-black px-3 md:px-4 py-1.5 md:py-2 rounded-2xl border transition-all ${
+                    showStats
+                      ? 'bg-slate-900 dark:bg-sky-500 text-white border-transparent'
+                      : 'text-slate-400 dark:text-slate-500 bg-white dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 hover:border-slate-300 dark:hover:border-zinc-600'
+                  }`}
+                >
+                  📊 סטטיסטיקה
+                </button>
+              </div>
+
+              {showStats && (
+                <div className="bg-white dark:bg-zinc-800 rounded-2xl border border-slate-100 dark:border-zinc-700 p-4 md:p-6 shadow-sm">
+                  <h3 className="text-sm font-black text-slate-900 dark:text-white mb-4 tracking-tight">
+                    שימוש לפי דייר — {historyMonth !== null ? MONTH_NAMES[historyMonth] : 'כל החודשים'} {historyYear !== null ? historyYear : 'כל השנים'}
+                  </h3>
+                  {usageStats.length === 0 ? (
+                    <p className="text-xs text-slate-400 dark:text-slate-500 font-bold">אין נתונים לתקופה זו</p>
+                  ) : (
+                    <div className="space-y-2.5">
+                      {usageStats.map(([name, count]) => (
+                        <div key={name} className="flex items-center gap-3">
+                          <span className="text-xs font-black text-slate-700 dark:text-slate-300 w-20 md:w-28 truncate text-right flex-shrink-0">{name}</span>
+                          <div className="flex-1 h-7 bg-slate-100 dark:bg-zinc-700/50 rounded-lg overflow-hidden">
+                            <div
+                              className="h-full bg-sky-500 dark:bg-sky-400 rounded-lg flex items-center justify-end px-2 transition-all duration-500"
+                              style={{ width: `${Math.max((count / maxUsage) * 100, 12)}%` }}
+                            >
+                              <span className="text-[10px] font-black text-white leading-none">{count}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-24 gap-6">
@@ -160,9 +305,9 @@ const App: React.FC = () => {
               <span className="text-slate-400 dark:text-slate-500 font-black text-xs tracking-[0.3em] uppercase">טוען נתונים</span>
             </div>
           ) : activeTab === 'charging' ? (
-            <ShiftList shifts={shifts} />
+            <ShiftList shifts={shifts} readOnly={showHistory} />
           ) : (
-            <ClubBookingList bookings={bookings} />
+            <ClubBookingList bookings={bookings} readOnly={showHistory} />
           )}
 
           {activeTab === 'club' && (
@@ -181,16 +326,18 @@ const App: React.FC = () => {
       </main>
 
       {/* Floating Action Button */}
-      <div className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-40">
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="w-16 h-16 md:w-20 md:h-20 bg-slate-900 dark:bg-sky-500 text-white rounded-full shadow-2xl shadow-slate-900/40 dark:shadow-sky-500/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 group"
-        >
-          <svg className="w-8 h-8 md:w-10 md:h-10 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" />
-          </svg>
-        </button>
-      </div>
+      {!showHistory && (
+        <div className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-40">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="w-16 h-16 md:w-20 md:h-20 bg-slate-900 dark:bg-sky-500 text-white rounded-full shadow-2xl shadow-slate-900/40 dark:shadow-sky-500/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 group"
+          >
+            <svg className="w-8 h-8 md:w-10 md:h-10 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" />
+            </svg>
+          </button>
+        </div>
+      )}
 
       {/* Modal */}
       {isModalOpen && (
@@ -198,9 +345,9 @@ const App: React.FC = () => {
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsModalOpen(false)}></div>
           <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-800 rounded-[2.5rem] shadow-2xl border border-slate-200/60 dark:border-zinc-700/50 overflow-hidden animate-in zoom-in-95 fade-in duration-300 max-h-[90vh] overflow-y-auto">
             {activeTab === 'charging' ? (
-              <ShiftForm existingShifts={shifts} onSuccess={handleSuccess} onCancel={() => setIsModalOpen(false)} />
+              <ShiftForm existingShifts={currentShifts} onSuccess={handleSuccess} onCancel={() => setIsModalOpen(false)} />
             ) : (
-              <ClubBookingForm existingBookings={bookings} onSuccess={handleSuccess} onCancel={() => setIsModalOpen(false)} />
+              <ClubBookingForm existingBookings={currentBookings} onSuccess={handleSuccess} onCancel={() => setIsModalOpen(false)} />
             )}
           </div>
         </div>

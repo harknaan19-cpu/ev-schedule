@@ -25,5 +25,6 @@ export interface ClubBooking {
   chairs: number;
   tables: number;
   clubReserved: boolean;
+  note?: string;
   timestamp: number;
 }

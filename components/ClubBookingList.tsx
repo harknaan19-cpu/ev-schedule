@@ -5,9 +5,10 @@ import { ref, remove, db } from '../firebase';
 
 interface ClubBookingListProps {
   bookings: ClubBooking[];
+  readOnly?: boolean;
 }
 
-const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings }) => {
+const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = false }) => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const confirmDelete = async () => {
@@ -43,7 +44,8 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings }) => {
               <th className="px-6 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">כסאות</th>
               <th className="px-6 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">שולחנות</th>
               <th className="px-6 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">מועדון</th>
-              <th className="px-6 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">פעולות</th>
+              <th className="px-6 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">הערה</th>
+              {!readOnly && <th className="px-6 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">פעולות</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100/50 dark:divide-zinc-700/50">
@@ -66,13 +68,18 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings }) => {
                     <span className="text-slate-300 dark:text-slate-600">✗</span>
                   )}
                 </td>
-                <td className="px-6 py-5">
-                  <button onClick={() => setDeleteId(b.id)} className="p-3 text-slate-300 dark:text-slate-700 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
+                <td className="px-6 py-5 text-sm text-slate-500 dark:text-slate-400 font-medium max-w-[200px] truncate">
+                  {b.note || '—'}
                 </td>
+                {!readOnly && (
+                  <td className="px-6 py-5">
+                    <button onClick={() => setDeleteId(b.id)} className="p-3 text-slate-300 dark:text-slate-700 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -88,11 +95,13 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings }) => {
                 <h3 className="font-black text-lg text-slate-900 dark:text-white tracking-tight">{b.name}</h3>
                 <span className="text-xs font-bold text-slate-400">דירה {b.apartment}</span>
               </div>
-              <button onClick={() => setDeleteId(b.id)} className="p-2 text-slate-300 dark:text-slate-600 hover:text-rose-500 transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
+              {!readOnly && (
+                <button onClick={() => setDeleteId(b.id)} className="p-2 text-slate-300 dark:text-slate-600 hover:text-rose-500 transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              )}
             </div>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2 overflow-hidden">
@@ -107,6 +116,11 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings }) => {
                 <span>{b.clubReserved ? '🏠 מועדון שמור' : 'ללא שיריון'}</span>
               </div>
             </div>
+            {b.note && (
+              <div className="text-xs text-slate-400 dark:text-slate-500 font-medium mt-1">
+                📝 {b.note}
+              </div>
+            )}
           </div>
         ))}
       </div>

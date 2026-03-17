@@ -6,9 +6,10 @@ import { ref, remove, db } from '../firebase';
 
 interface ShiftListProps {
   shifts: Shift[];
+  readOnly?: boolean;
 }
 
-const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
+const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const confirmDelete = async () => {
@@ -40,7 +41,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
               <th className="px-8 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">מטעין</th>
               <th className="px-8 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">מועד</th>
               <th className="px-8 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">זמן</th>
-              <th className="px-8 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">פעולות</th>
+              {!readOnly && <th className="px-8 py-6 text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-[0.2em]">פעולות</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100/50 dark:divide-zinc-700/50">
@@ -68,16 +69,18 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
                     <span className="text-xl font-black leading-none">{shift.endTime}</span>
                   </div>
                 </td>
-                <td className="px-8 py-6">
-                  <button
-                    onClick={() => setDeleteId(shift.id)}
-                    className="p-3 text-slate-300 dark:text-slate-700 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
-                </td>
+                {!readOnly && (
+                  <td className="px-8 py-6">
+                    <button
+                      onClick={() => setDeleteId(shift.id)}
+                      className="p-3 text-slate-300 dark:text-slate-700 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-2xl transition-all"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -89,14 +92,16 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts }) => {
           <div key={shift.id} className="bg-white dark:bg-zinc-800 p-4 rounded-2xl border border-slate-100 dark:border-zinc-700 shadow-md shadow-slate-100/20 dark:shadow-none transition-all">
             <div className="flex justify-between items-center mb-3">
               <h3 className="font-black text-lg text-slate-900 dark:text-white tracking-tight truncate ml-2">{shift.username}</h3>
-              <button
-                onClick={() => setDeleteId(shift.id)}
-                className="p-2 text-slate-300 dark:text-slate-600 hover:text-rose-500 transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
+              {!readOnly && (
+                <button
+                  onClick={() => setDeleteId(shift.id)}
+                  className="p-2 text-slate-300 dark:text-slate-600 hover:text-rose-500 transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              )}
             </div>
             
             <div className="flex items-center justify-between gap-2">
