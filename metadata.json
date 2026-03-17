@@ -1,0 +1,5 @@
+{
+  "name": "EV Charging Shift Scheduler",
+  "description": "A Hebrew (RTL) mobile-first application for managing EV charging shifts with real-time Firebase synchronization, overlap validation, and dark mode support.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מנהל משמרות טעינה</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              assistant: ['Assistant', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/he.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap');
+      body {
+        font-family: 'Assistant', sans-serif;
+      }
+      
+      /* Premium Flatpickr Theme */
+      .flatpickr-calendar, .flatpickr-calendar *, .flatpickr-days, .dayContainer {
+        box-sizing: border-box !important;
+      }
+      .flatpickr-calendar {
+        font-family: 'Assistant', sans-serif;
+        border-radius: 1.25rem !important;
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15) !important;
+        border: 1px solid rgba(0, 0, 0, 0.05) !important;
+        padding: 4px !important;
+        background: #ffffff !important;
+        margin-top: 4px;
+        width: 290px !important; /* Fixed width for mobile */
+        font-size: 13px !important;
+      }
+      .flatpickr-innerContainer {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+      }
+      .flatpickr-rContainer {
+        width: 280px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+      .flatpickr-days, .dayContainer {
+        width: 280px !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+        height: auto !important;
+        min-height: 0 !important;
+        justify-content: flex-start !important;
+      }
+      @media (min-width: 640px) {
+        .flatpickr-calendar {
+          padding: 0.75rem !important;
+          width: 315px !important;
+          font-size: 14px !important;
+          border-radius: 1.5rem !important;
+        }
+        .flatpickr-days, .dayContainer {
+          width: 300px !important;
+          min-width: 300px !important;
+          max-width: 300px !important;
+          height: auto !important;
+          min-height: 0 !important;
+          justify-content: flex-start !important;
+        }
+      }
+      .dark .flatpickr-calendar {
+        background: #09090b !important; /* zinc-950 */
+        border-color: rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
+      }
+      .flatpickr-day {
+        max-width: 36px !important;
+        height: 36px !important;
+        line-height: 36px !important;
+        border-radius: 0.5rem !important;
+        margin: 2px !important;
+      }
+      @media (min-width: 640px) {
+        .flatpickr-day {
+          max-width: 39px !important;
+          height: 39px !important;
+          line-height: 39px !important;
+          border-radius: 0.75rem !important;
+          margin: 2px !important;
+        }
+      }
+      .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+        background: #0ea5e9 !important; /* sky-500 */
+        border-color: #0ea5e9 !important;
+        color: #ffffff !important;
+      }
+      .dark .flatpickr-day.selected {
+        background: #38bdf8 !important; /* sky-400 */
+        border-color: #38bdf8 !important;
+      }
+      .flatpickr-day:hover {
+        background: #f4f4f5 !important;
+      }
+      .dark .flatpickr-day:not(.flatpickr-disabled):hover {
+        background: #18181b !important; /* zinc-900 */
+      }
+      .dark .flatpickr-day:not(.flatpickr-disabled), .dark .flatpickr-weekday, .dark .flatpickr-month, .dark .flatpickr-current-month, .dark .flatpickr-monthDropdown-months {
+        color: #ffffff !important;
+      }
+      .dark .flatpickr-day.flatpickr-disabled {
+        color: rgba(255, 255, 255, 0.15) !important;
+      }
+      .dark .flatpickr-prev-month, .dark .flatpickr-next-month {
+        fill: #ffffff !important;
+      }
+      .flatpickr-time {
+        border-top: 1px solid #f4f4f5 !important;
+        margin-top: 0.25rem !important;
+        height: 35px !important;
+        line-height: 35px !important;
+      }
+      @media (min-width: 640px) {
+        .flatpickr-time {
+          height: 40px !important;
+          line-height: 40px !important;
+          margin-top: 0.5rem !important;
+        }
+      }
+      .dark .flatpickr-time {
+        border-top-color: #18181b !important;
+      }
+      .dark .flatpickr-time input, .dark .flatpickr-time .flatpickr-am-pm {
+        color: #ffffff !important;
+      }
+      .flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover {
+        background: #f4f4f5 !important;
+        border-radius: 0.5rem !important;
+      }
+      .dark .flatpickr-time input:hover, .dark .flatpickr-time .flatpickr-am-pm:hover {
+        background: #18181b !important;
+      }
+      .flatpickr-months .flatpickr-month {
+        height: 30px !important;
+      }
+      @media (min-width: 640px) {
+        .flatpickr-months .flatpickr-month {
+          height: 35px !important;
+        }
+      }
+      .flatpickr-innerContainer {
+        margin-top: 2px;
+      }
+      @media (min-width: 640px) {
+        .flatpickr-innerContainer {
+          margin-top: 5px;
+        }
+      }
+      .flatpickr-weekdayContainer {
+        display: flex !important;
+        justify-content: space-around !important;
+      }
+      .flatpickr-weekday {
+        font-size: 11px !important;
+      }
+      /* Hide days from other months and collapse space */
+      .flatpickr-day.prevMonthDay,
+      .flatpickr-day.nextMonthDay {
+        display: none !important;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "firebase/": "https://esm.sh/firebase@^12.8.0/"
+  }
+}
+</script>
+</head>
+  <body class="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+  </body>
+</html>
