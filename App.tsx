@@ -58,6 +58,17 @@ const App: React.FC = () => {
       <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/90 dark:bg-zinc-900/90 border-b border-slate-200/60 dark:border-zinc-800/50">
         <div className="max-w-5xl mx-auto px-4 md:px-6 h-14 md:h-20 flex items-center justify-between">
           <div className="flex items-center gap-2 md:gap-3">
+            <svg className="w-7 h-7 md:w-8 md:h-8 flex-shrink-0" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 4C16.536 4 4 16.536 4 32c0 12.8 8.6 23.6 20.3 27l1.7-5.2C15.6 50.6 9 42 9 32c0-12.7 10.3-23 23-23s23 10.3 23 23c0 6.5-2.7 12.4-7.1 16.6l-1.4-3.4c-.8-1.8-2.8-2-3.8-1.2l-1.2.8 3.8 10c.6 1.6 2.6 2 3.6.6l6-8-2.8-2-3 4C54 43.8 59 38.4 59 32 59 16.536 46.464 4 32 4z" fill="currentColor" className="text-slate-900 dark:text-white"/>
+              <rect x="23" y="16" width="18" height="5" rx="2.5" fill="currentColor" className="text-slate-900 dark:text-white"/>
+              <rect x="20" y="21" width="24" height="22" rx="5" fill="currentColor" className="text-slate-900 dark:text-white"/>
+              <circle cx="27.5" cy="28" r="2.2" fill="currentColor" className="text-white dark:text-zinc-900"/>
+              <circle cx="36.5" cy="28" r="2.2" fill="currentColor" className="text-white dark:text-zinc-900"/>
+              <circle cx="32" cy="32.5" r="2.2" fill="currentColor" className="text-white dark:text-zinc-900"/>
+              <circle cx="27.5" cy="37" r="2.2" fill="currentColor" className="text-white dark:text-zinc-900"/>
+              <circle cx="36.5" cy="37" r="2.2" fill="currentColor" className="text-white dark:text-zinc-900"/>
+              <polygon points="42,46 38,46 40,39 36,39 32,48 36,48 34,54" fill="currentColor" className="text-slate-900 dark:text-white"/>
+            </svg>
             <h1 className="text-lg md:text-2xl font-black tracking-tight text-slate-900 dark:text-white truncate">
               ניהול משמרות <span className="text-sky-500 dark:text-sky-400">EV</span>
             </h1>
