@@ -103,7 +103,20 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
   };
 
   const inputClasses = "w-full px-4 py-3 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-2xl focus:ring-4 focus:ring-sky-500/10 dark:focus:ring-sky-400/10 focus:border-sky-500 dark:focus:border-sky-400 outline-none text-slate-900 dark:text-white transition-all font-medium placeholder:text-slate-400 shadow-sm";
-  const timeInputClasses = "w-full max-w-[140px] md:max-w-none px-2 md:px-4 py-3 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-2xl focus:ring-4 focus:ring-sky-500/10 dark:focus:ring-sky-400/10 focus:border-sky-500 dark:focus:border-sky-400 outline-none text-slate-900 dark:text-white transition-all font-medium text-sm md:text-base shadow-sm text-center";
+  const timeInputClasses = "w-full px-2 md:px-4 py-3 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-2xl focus:ring-4 focus:ring-sky-500/10 dark:focus:ring-sky-400/10 focus:border-sky-500 dark:focus:border-sky-400 outline-none text-slate-900 dark:text-white transition-all font-medium text-sm md:text-base shadow-sm text-center appearance-none";
+
+  const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
+  const minutes = ['00', '15', '30', '45'];
+
+  const parseTime = (t: string) => {
+    const [h, m] = t.split(':');
+    return { h: h || '00', m: m || '00' };
+  };
+
+  const startParts = parseTime(startTime);
+  const endParts = parseTime(endTime);
+
+  const selectClasses = "px-3 py-3 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl focus:ring-4 focus:ring-sky-500/10 dark:focus:ring-sky-400/10 focus:border-sky-500 dark:focus:border-sky-400 outline-none text-slate-900 dark:text-white transition-all font-bold text-base shadow-sm text-center appearance-none";
 
   return (
     <div className="p-6 md:p-8">
@@ -153,30 +166,46 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
             </div>
           </div>
           
-          <div className="md:col-span-2 space-y-3">
-            <div className="flex items-center gap-2 md:gap-6" dir="ltr">
-              <div className="relative flex-1 min-w-0">
-                <input
-                  type="time"
-                  value={startTime}
-                  onChange={(e) => setStartTime(e.target.value)}
-                  step="900"
-                  className={timeInputClasses}
-                />
+          <div className="md:col-span-2">
+            <div className="flex items-center justify-center gap-3 md:gap-6" dir="ltr">
+              <div className="flex items-center gap-1">
+                <select
+                  value={startParts.h}
+                  onChange={(e) => setStartTime(`${e.target.value}:${startParts.m}`)}
+                  className={selectClasses}
+                >
+                  {hours.map(h => <option key={h} value={h}>{h}</option>)}
+                </select>
+                <span className="text-slate-400 font-bold">:</span>
+                <select
+                  value={startParts.m}
+                  onChange={(e) => setStartTime(`${startParts.h}:${e.target.value}`)}
+                  className={selectClasses}
+                >
+                  {minutes.map(m => <option key={m} value={m}>{m}</option>)}
+                </select>
               </div>
-              
-              <svg className="w-5 h-5 md:w-8 md:h-8 text-sky-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-sky-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
 
-              <div className="relative flex-1 min-w-0">
-                <input
-                  type="time"
-                  value={endTime}
-                  onChange={(e) => setEndTime(e.target.value)}
-                  step="900"
-                  className={timeInputClasses}
-                />
+              <div className="flex items-center gap-1">
+                <select
+                  value={endParts.h}
+                  onChange={(e) => setEndTime(`${e.target.value}:${endParts.m}`)}
+                  className={selectClasses}
+                >
+                  {hours.map(h => <option key={h} value={h}>{h}</option>)}
+                </select>
+                <span className="text-slate-400 font-bold">:</span>
+                <select
+                  value={endParts.m}
+                  onChange={(e) => setEndTime(`${endParts.h}:${e.target.value}`)}
+                  className={selectClasses}
+                >
+                  {minutes.map(m => <option key={m} value={m}>{m}</option>)}
+                </select>
               </div>
             </div>
           </div>
