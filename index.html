@@ -178,6 +178,15 @@
       .flatpickr-day.nextMonthDay {
         display: none !important;
       }
+      /* Constrain native time input on iOS Safari */
+      input[type="time"] {
+        -webkit-appearance: none;
+        appearance: none;
+        min-width: 0;
+      }
+      input[type="time"]::-webkit-date-and-time-value {
+        text-align: center;
+      }
     </style>
   <script type="importmap">
 {

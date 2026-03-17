@@ -103,7 +103,7 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
   };
 
   const inputClasses = "w-full px-4 py-3 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-2xl focus:ring-4 focus:ring-sky-500/10 dark:focus:ring-sky-400/10 focus:border-sky-500 dark:focus:border-sky-400 outline-none text-slate-900 dark:text-white transition-all font-medium placeholder:text-slate-400 shadow-sm";
-  const timeInputClasses = "w-full px-2 md:px-4 py-3 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-2xl focus:ring-4 focus:ring-sky-500/10 dark:focus:ring-sky-400/10 focus:border-sky-500 dark:focus:border-sky-400 outline-none text-slate-900 dark:text-white transition-all font-medium text-sm md:text-base shadow-sm";
+  const timeInputClasses = "w-full max-w-[140px] md:max-w-none px-2 md:px-4 py-3 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-2xl focus:ring-4 focus:ring-sky-500/10 dark:focus:ring-sky-400/10 focus:border-sky-500 dark:focus:border-sky-400 outline-none text-slate-900 dark:text-white transition-all font-medium text-sm md:text-base shadow-sm text-center";
 
   return (
     <div className="p-6 md:p-8">
