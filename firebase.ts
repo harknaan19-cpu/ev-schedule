@@ -17,5 +17,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 export const shiftsRef = ref(db, 'schedule-v3');
+export const clubBookingsRef = ref(db, 'club-bookings');
 
 export { db, set, remove, onValue, query, orderByChild, ref };
