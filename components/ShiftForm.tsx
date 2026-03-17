@@ -24,8 +24,6 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
   const [error, setError] = useState<string | null>(null);
   
   const dateInputRef = useRef<HTMLInputElement>(null);
-  const startTimeRef = useRef<HTMLInputElement>(null);
-  const endTimeRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (dateInputRef.current) {
@@ -42,46 +40,6 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
             const d = selectedDates[0];
             const formatted = `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
             setDate(formatted);
-          }
-        }
-      });
-    }
-
-    if (startTimeRef.current) {
-      // @ts-ignore
-      flatpickr(startTimeRef.current, {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        defaultDate: "22:00",
-        minuteIncrement: 15,
-        disableMobile: true,
-        animate: true,
-        onChange: (selectedDates: Date[]) => {
-          if (selectedDates.length > 0) {
-            const d = selectedDates[0];
-            setStartTime(`${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
-          }
-        }
-      });
-    }
-
-    if (endTimeRef.current) {
-      // @ts-ignore
-      flatpickr(endTimeRef.current, {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        defaultDate: "06:00",
-        minuteIncrement: 15,
-        disableMobile: true,
-        animate: true,
-        onChange: (selectedDates: Date[]) => {
-          if (selectedDates.length > 0) {
-            const d = selectedDates[0];
-            setEndTime(`${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`);
           }
         }
       });
@@ -198,11 +156,11 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
             <div className="flex items-center gap-3 md:gap-6" dir="ltr">
               <div className="relative flex-1">
                 <input
-                  type="text"
-                  ref={startTimeRef}
-                  className={`${inputClasses} cursor-pointer pl-10 md:pl-12`}
-                  placeholder="התחלה"
-                  readOnly
+                  type="time"
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
+                  step="900"
+                  className={`${inputClasses} pl-10 md:pl-12`}
                 />
                 <div className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -217,11 +175,11 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
 
               <div className="relative flex-1">
                 <input
-                  type="text"
-                  ref={endTimeRef}
-                  className={`${inputClasses} cursor-pointer pl-10 md:pl-12`}
-                  placeholder="סיום"
-                  readOnly
+                  type="time"
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                  step="900"
+                  className={`${inputClasses} pl-10 md:pl-12`}
                 />
                 <div className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
