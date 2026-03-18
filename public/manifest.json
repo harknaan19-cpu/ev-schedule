@@ -4,8 +4,8 @@
   "description": "ניהול עמדת טעינה ומועדון דיירים - הר כנען 19",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#0ea5e9",
+  "background_color": "#1c1c28",
+  "theme_color": "#1c1c28",
   "dir": "rtl",
   "lang": "he",
   "icons": [
