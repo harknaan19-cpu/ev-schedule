@@ -30,9 +30,9 @@
       @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap');
 
       /* ── Base ── */
-      body { font-family: 'Assistant', sans-serif; }
+      body { font-family: 'Assistant', sans-serif; background: #f0f4f8; }
       html { background: #f0f4f8; }
-      html.dark { background: #0f1117; }
+      html.dark, html.dark body { background: #0f1117; }
 
       .glass-bg {
         background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #f0f4f8 100%);
@@ -311,6 +311,7 @@
 </script>
 </head>
   <body class="transition-colors duration-200">
+    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark')</script>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>
