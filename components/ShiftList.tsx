@@ -67,7 +67,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
         {shifts.map((shift, i) => (
           <div key={shift.id} className="glass-card-subtle p-4 rounded-3xl a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="flex justify-between items-center mb-2.5">
-              <h3 className="font-bold text-base truncate ml-2">{shift.username}</h3>
+              <h3 className="font-bold text-lg truncate ml-2">{shift.username}</h3>
               {!readOnly && (
                 <button onClick={() => setDeleteId(shift.id)} className="p-1.5 text-slate-400 del-btn rounded-full">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
@@ -76,13 +76,13 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
             </div>
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 overflow-hidden">
-                <span className={`${DAY_COLORS[shift.day]} text-[9px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap`}>{DAY_NAMES[shift.day]}</span>
-                <span className="text-slate-400 text-xs font-semibold whitespace-nowrap">{shift.scheduledDate}</span>
+                <span className={`${DAY_COLORS[shift.day]} text-xs px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap`}>{DAY_NAMES[shift.day]}</span>
+                <span className="text-slate-400 text-sm font-semibold whitespace-nowrap">{shift.scheduledDate}</span>
               </div>
               <div className="flex items-center gap-1.5 glass-pill px-2.5 py-1.5" dir="ltr">
-                <span className="font-mono text-sm font-bold leading-none">{shift.startTime}</span>
-                <svg className="w-3 h-3 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                <span className="font-mono text-sm font-bold leading-none">{shift.endTime}</span>
+                <span className="font-mono text-base font-bold leading-none">{shift.startTime}</span>
+                <svg className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                <span className="font-mono text-base font-bold leading-none">{shift.endTime}</span>
               </div>
             </div>
           </div>

@@ -1,18 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <!-- Outer circle ring -->
-  <circle cx="32" cy="32" r="29" stroke="#475569" stroke-width="4" fill="none"/>
-
-  <!-- Back tall peak -->
-  <polygon points="30,8 46,44 14,44" fill="none" stroke="#475569" stroke-width="2.5" stroke-linejoin="round"/>
-  <!-- Ridge line on tall peak -->
-  <line x1="30" y1="8" x2="38" y2="26" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
-
-  <!-- Front smaller peak -->
-  <polygon points="20,24 34,44 6,44" fill="none" stroke="#475569" stroke-width="2.5" stroke-linejoin="round"/>
-  <!-- Ridge line on front peak -->
-  <line x1="20" y1="24" x2="14" y2="36" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
-
-  <!-- "19" dark badge -->
-  <rect x="38" y="34" width="16" height="13" rx="3" fill="#475569"/>
-  <text x="46" y="44.5" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="10" fill="#e0e5ec">19</text>
+  <!-- Dark fill -->
+  <circle cx="32" cy="32" r="31" fill="#0f1117"/>
+  <!-- Outer thick ring -->
+  <circle cx="32" cy="32" r="28" stroke="#E53E3E" stroke-width="2.5" fill="none"/>
+  <!-- Inner thin ring -->
+  <circle cx="32" cy="32" r="24" stroke="#E53E3E" stroke-width="0.8" fill="none" opacity="0.4"/>
+  <!-- Accent dot top -->
+  <circle cx="32" cy="6" r="2" fill="#E53E3E"/>
+  <!-- Bold 19 -->
+  <text x="32" y="41" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="26" letter-spacing="-1" fill="#E53E3E">19</text>
+  <!-- Underline accent -->
+  <line x1="22" y1="45" x2="42" y2="45" stroke="#E53E3E" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
 </svg>

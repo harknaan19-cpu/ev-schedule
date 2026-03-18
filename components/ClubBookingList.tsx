@@ -68,8 +68,8 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
           <div key={b.id} className="glass-card-subtle p-4 rounded-3xl a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
             <div className="flex justify-between items-center mb-2.5">
               <div>
-                <h3 className="font-bold text-base">{b.name}</h3>
-                <span className="text-xs font-semibold text-slate-400">דירה {b.apartment}</span>
+                <h3 className="font-bold text-lg">{b.name}</h3>
+                <span className="text-sm font-semibold text-slate-400">דירה {b.apartment}</span>
               </div>
               {!readOnly && (
                 <button onClick={() => setDeleteId(b.id)} className="p-1.5 text-slate-400 del-btn rounded-full">
@@ -79,15 +79,15 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
             </div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2 overflow-hidden">
-                <span className={`${DAY_COLORS[b.day]} text-[9px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap`}>{DAY_NAMES[b.day]}</span>
-                <span className="text-slate-400 text-xs font-semibold whitespace-nowrap">{b.scheduledDate}</span>
+                <span className={`${DAY_COLORS[b.day]} text-xs px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap`}>{DAY_NAMES[b.day]}</span>
+                <span className="text-slate-400 text-sm font-semibold whitespace-nowrap">{b.scheduledDate}</span>
               </div>
-              <div className="flex items-center gap-1.5 text-[10px] font-semibold text-slate-400 whitespace-nowrap">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 whitespace-nowrap">
                 <span>{b.chairs} כסאות</span><span>·</span><span>{b.tables} שולחנות</span><span>·</span>
                 <span>{b.clubReserved ? <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded-full">שמור</span> : 'ללא שיריון'}</span>
               </div>
             </div>
-            {b.note && <div className="text-xs text-amber-700 dark:text-amber-300 font-medium mt-1.5 flex items-center gap-1 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1.5 rounded-full"><svg className="w-3 h-3 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>{b.note}</div>}
+            {b.note && <div className="text-sm text-amber-700 dark:text-amber-300 font-medium mt-1.5 flex items-center gap-1 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1.5 rounded-full"><svg className="w-3 h-3 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>{b.note}</div>}
           </div>
         ))}
       </div>

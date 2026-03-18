@@ -53,20 +53,20 @@
       }
       .glass-orbs::before {
         width: 400px; height: 400px;
-        background: radial-gradient(circle, rgba(155,27,94,0.12), transparent 70%);
+        background: radial-gradient(circle, rgba(229,62,62,0.12), transparent 70%);
         top: -100px; right: -100px;
       }
       .glass-orbs::after {
         width: 350px; height: 350px;
-        background: radial-gradient(circle, rgba(155,27,94,0.08), transparent 70%);
+        background: radial-gradient(circle, rgba(229,62,62,0.08), transparent 70%);
         bottom: 20%; left: -80px;
         animation-delay: -10s;
       }
       .dark .glass-orbs::before {
-        background: radial-gradient(circle, rgba(155,27,94,0.06), transparent 70%);
+        background: radial-gradient(circle, rgba(229,62,62,0.06), transparent 70%);
       }
       .dark .glass-orbs::after {
-        background: radial-gradient(circle, rgba(155,27,94,0.04), transparent 70%);
+        background: radial-gradient(circle, rgba(229,62,62,0.04), transparent 70%);
       }
       @keyframes floatOrb {
         0% { transform: translate(0, 0) scale(1); }
@@ -118,16 +118,16 @@
         transition: border-color 0.2s, box-shadow 0.2s;
       }
       .glass-input:focus {
-        border-color: rgba(155,27,94,0.35);
-        box-shadow: 0 0 0 3px rgba(155,27,94,0.08);
+        border-color: rgba(229,62,62,0.35);
+        box-shadow: 0 0 0 3px rgba(229,62,62,0.08);
       }
       .dark .glass-input {
         background: rgba(255,255,255,0.04);
         border: 1px solid rgba(255,255,255,0.06);
       }
       .dark .glass-input:focus {
-        border-color: rgba(155,27,94,0.3);
-        box-shadow: 0 0 0 3px rgba(155,27,94,0.06);
+        border-color: rgba(229,62,62,0.3);
+        box-shadow: 0 0 0 3px rgba(229,62,62,0.06);
       }
 
       /* ── Buttons ── */
@@ -147,7 +147,7 @@
       .dark .glass-btn:hover { background: rgba(255,255,255,0.08); }
 
       .glass-btn-primary {
-        background: linear-gradient(135deg, #9B1B5E, #b84d7e);
+        background: linear-gradient(135deg, #E53E3E, #ef6b6b);
         color: white;
         border-radius: 9999px;
         border: none;
@@ -173,7 +173,7 @@
 
       /* FAB */
       .glass-fab {
-        background: linear-gradient(135deg, #9B1B5E, #b84d7e);
+        background: linear-gradient(135deg, #E53E3E, #ef6b6b);
         border-radius: 9999px;
         box-shadow: none;
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -214,8 +214,8 @@
       .row-hover {
         transition: background-color 0.3s ease;
       }
-      .row-hover:hover { background-color: rgba(155,27,94,0.03); }
-      .dark .row-hover:hover { background-color: rgba(155,27,94,0.05); }
+      .row-hover:hover { background-color: rgba(229,62,62,0.03); }
+      .dark .row-hover:hover { background-color: rgba(229,62,62,0.05); }
 
       /* ── Animations ── */
       @keyframes fadeInUp {
@@ -272,11 +272,11 @@
       .flatpickr-day { max-width: 36px !important; height: 36px !important; line-height: 36px !important; border-radius: 50% !important; margin: 2px !important; }
       @media (min-width: 640px) { .flatpickr-day { max-width: 39px !important; height: 39px !important; line-height: 39px !important; } }
       .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
-        background: #9B1B5E !important; border-color: #9B1B5E !important; color: #fff !important;
+        background: #E53E3E !important; border-color: #E53E3E !important; color: #fff !important;
       }
-      .dark .flatpickr-day.selected { background: #9B1B5E !important; border-color: #9B1B5E !important; }
-      .flatpickr-day:hover { background: rgba(155,27,94,0.1) !important; }
-      .dark .flatpickr-day:not(.flatpickr-disabled):hover { background: rgba(155,27,94,0.15) !important; }
+      .dark .flatpickr-day.selected { background: #E53E3E !important; border-color: #E53E3E !important; }
+      .flatpickr-day:hover { background: rgba(229,62,62,0.1) !important; }
+      .dark .flatpickr-day:not(.flatpickr-disabled):hover { background: rgba(229,62,62,0.15) !important; }
       .dark .flatpickr-day:not(.flatpickr-disabled), .dark .flatpickr-weekday, .dark .flatpickr-month, .dark .flatpickr-current-month, .dark .flatpickr-monthDropdown-months { color: #e2e8f0 !important; }
       .dark .flatpickr-day.flatpickr-disabled { color: rgba(255,255,255,0.15) !important; }
       .dark .flatpickr-prev-month, .dark .flatpickr-next-month { fill: #e2e8f0 !important; }
@@ -284,8 +284,8 @@
       @media (min-width: 640px) { .flatpickr-time { height: 40px !important; line-height: 40px !important; margin-top: 0.5rem !important; } }
       .dark .flatpickr-time { border-top-color: rgba(255,255,255,0.06) !important; }
       .dark .flatpickr-time input, .dark .flatpickr-time .flatpickr-am-pm { color: #e2e8f0 !important; }
-      .flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover { background: rgba(155,27,94,0.08) !important; border-radius: 0.5rem !important; }
-      .dark .flatpickr-time input:hover, .dark .flatpickr-time .flatpickr-am-pm:hover { background: rgba(155,27,94,0.12) !important; }
+      .flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover { background: rgba(229,62,62,0.08) !important; border-radius: 0.5rem !important; }
+      .dark .flatpickr-time input:hover, .dark .flatpickr-time .flatpickr-am-pm:hover { background: rgba(229,62,62,0.12) !important; }
       .flatpickr-months .flatpickr-month { height: 30px !important; }
       @media (min-width: 640px) { .flatpickr-months .flatpickr-month { height: 35px !important; } }
       .flatpickr-innerContainer { margin-top: 2px; }
