@@ -35,7 +35,7 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
       {/* Desktop list */}
       <div className="hidden md:block glass-card rounded-3xl p-2 a-fade-up a-d2">
         <div className="space-y-1">
-          <div className={`grid ${readOnly ? 'grid-cols-7' : 'grid-cols-8'} items-center px-5 py-3 text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-[0.12em] text-right`}>
+          <div className={`grid ${readOnly ? 'grid-cols-7' : 'grid-cols-8'} items-center px-5 py-3 text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-[0.12em] text-right border-b border-slate-200/40 dark:border-white/5 mx-3 mb-1`}>
             <span>שם</span><span>דירה</span><span>תאריך</span><span>כסאות</span><span>שולחנות</span><span>מועדון</span><span>הערה</span>{!readOnly && <span className="text-center">פעולות</span>}
           </div>
           {bookings.map((b, i) => (

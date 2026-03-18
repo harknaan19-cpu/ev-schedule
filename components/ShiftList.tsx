@@ -35,7 +35,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
       {/* Desktop list */}
       <div className="hidden md:block glass-card rounded-3xl p-2 a-fade-up a-d2">
         <div className="space-y-1">
-          <div className={`grid ${readOnly ? 'grid-cols-3' : 'grid-cols-4'} items-center px-5 py-3 text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-[0.12em] text-right`}>
+          <div className={`grid ${readOnly ? 'grid-cols-3' : 'grid-cols-4'} items-center px-5 py-3 text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-[0.12em] text-right border-b border-slate-200/40 dark:border-white/5 mx-3 mb-1`}>
             <span>מטעין</span><span>מועד</span><span>זמן</span>{!readOnly && <span className="text-center">פעולות</span>}
           </div>
           {shifts.map((shift, i) => (
