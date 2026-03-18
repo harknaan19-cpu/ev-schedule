@@ -28,7 +28,7 @@ const App: React.FC = () => {
     if (isDarkMode) { document.documentElement.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
     else { document.documentElement.classList.remove('dark'); localStorage.setItem('theme', 'light'); }
     const metas = document.querySelectorAll('meta[name="theme-color"]');
-    const color = isDarkMode ? '#1c1c28' : '#e8e4df';
+    const color = isDarkMode ? '#2a2d3e' : '#e0e5ec';
     metas.forEach(m => m.setAttribute('content', color));
   }, [isDarkMode]);
 
@@ -85,7 +85,7 @@ const App: React.FC = () => {
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 w-full bg-[#e8e4df] dark:bg-[#1c1c28] a-fade-in" style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.06)', paddingTop: 'env(safe-area-inset-top)' }}>
+      <header className="sticky top-0 z-40 w-full neu-header a-fade-in" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="max-w-5xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 md:gap-3">
             <svg className="w-6 h-6 md:w-7 md:h-7 flex-shrink-0" viewBox="0 0 64 64" fill="none">
@@ -142,7 +142,7 @@ const App: React.FC = () => {
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 היסטוריה
               </button>
-              <div className="text-[9px] md:text-[10px] font-bold text-slate-600 dark:text-slate-300 neu-inset px-3 py-1.5 rounded-full uppercase tracking-[0.15em]">
+              <div className="text-[9px] md:text-[10px] font-bold text-slate-600 dark:text-slate-300 neu-pill px-3 py-1.5 rounded-full uppercase tracking-[0.15em]">
                 {count} רשומות
               </div>
             </div>
@@ -199,9 +199,9 @@ const App: React.FC = () => {
 
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-24 gap-5 a-fade-in">
-              <div className="relative">
-                <div className="w-10 h-10 border-3 border-slate-300/40 dark:border-slate-600/30 rounded-full"></div>
-                <div className="absolute top-0 left-0 w-10 h-10 border-3 border-t-[#DC143C] rounded-full animate-spin"></div>
+              <div className="relative w-14 h-14 neu-concave rounded-full flex items-center justify-center">
+                <div className="w-9 h-9 border-3 border-slate-300/30 dark:border-slate-600/20 rounded-full"></div>
+                <div className="absolute w-9 h-9 border-3 border-t-[#DC143C] rounded-full animate-spin"></div>
               </div>
               <span className="text-slate-400 font-bold text-xs tracking-[0.2em] uppercase">טוען נתונים</span>
             </div>
@@ -228,11 +228,11 @@ const App: React.FC = () => {
 
       {/* FAB */}
       {!showHistory && (
-        <div className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-40 a-scale-in a-d6">
+        <div className="fixed bottom-6 md:bottom-8 inset-x-0 flex justify-center z-40 a-scale-in a-d6">
           <button onClick={() => setIsModalOpen(true)}
-            className="relative w-14 h-14 md:w-16 md:h-16 rounded-full neu-btn-primary flex items-center justify-center group"
+            className="relative w-14 h-14 md:w-16 md:h-16 rounded-full neu-fab flex items-center justify-center group"
             style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}>
-            <svg className="w-7 h-7 md:w-8 md:h-8 text-[#DC143C] transition-transform duration-500 group-hover:rotate-90" style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-7 h-7 md:w-8 md:h-8 text-[#DC143C] dark:text-[#E8556D] transition-transform duration-500 group-hover:rotate-90" style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
             </svg>
           </button>

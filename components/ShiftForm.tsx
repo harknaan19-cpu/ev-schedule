@@ -56,7 +56,7 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
           <h2 className="text-xl font-extrabold text-slate-700 dark:text-slate-100 tracking-tight">הוספת משמרת טעינה</h2>
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-0.5">מלא את הפרטים למטה</p>
         </div>
-        <button onClick={onCancel} className="w-9 h-9 rounded-full neu-btn flex items-center justify-center text-slate-400">
+        <button onClick={onCancel} className="w-9 h-9 rounded-full neu-pill flex items-center justify-center text-slate-400">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>

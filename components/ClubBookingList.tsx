@@ -22,8 +22,8 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
   if (bookings.length === 0) {
     return (
       <div className="text-center py-16 neu-raised rounded-3xl a-fade-up">
-        <div className="w-16 h-16 rounded-full neu-inset flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-[#DC143C]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+        <div className="w-16 h-16 rounded-full neu-concave flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-[#DC143C]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
         </div>
         <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">אין הזמנות מועדון</p>
       </div>
@@ -36,15 +36,15 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
       <div className="hidden md:block neu-raised rounded-3xl overflow-hidden a-fade-up a-d2">
         <table className="w-full text-right border-collapse">
           <thead>
-            <tr className="border-b" style={{ borderColor: 'rgba(0,0,0,0.06)' }}>
-              <th className="px-5 py-5 text-[11px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.15em]">שם</th>
-              <th className="px-5 py-5 text-[11px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.15em]">דירה</th>
-              <th className="px-5 py-5 text-[11px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.15em]">תאריך</th>
-              <th className="px-5 py-5 text-[11px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.15em]">כסאות</th>
-              <th className="px-5 py-5 text-[11px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.15em]">שולחנות</th>
-              <th className="px-5 py-5 text-[11px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.15em]">מועדון</th>
-              <th className="px-5 py-5 text-[11px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.15em]">הערה</th>
-              {!readOnly && <th className="px-5 py-5 text-[11px] font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.15em]">פעולות</th>}
+            <tr className="neu-concave">
+              <th className="px-5 py-4 text-xs font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.12em]">שם</th>
+              <th className="px-5 py-4 text-xs font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.12em]">דירה</th>
+              <th className="px-5 py-4 text-xs font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.12em]">תאריך</th>
+              <th className="px-5 py-4 text-xs font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.12em]">כסאות</th>
+              <th className="px-5 py-4 text-xs font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.12em]">שולחנות</th>
+              <th className="px-5 py-4 text-xs font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.12em]">מועדון</th>
+              <th className="px-5 py-4 text-xs font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.12em]">הערה</th>
+              {!readOnly && <th className="px-5 py-4 text-xs font-extrabold text-slate-600 dark:text-slate-300 uppercase tracking-[0.12em]">פעולות</th>}
             </tr>
           </thead>
           <tbody>
@@ -64,7 +64,7 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
                 <td className="px-5 py-4 text-sm text-slate-400 font-medium max-w-[180px] truncate">{b.note ? <span className="flex items-center gap-1"><svg className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>{b.note}</span> : '—'}</td>
                 {!readOnly && (
                   <td className="px-5 py-4">
-                    <button onClick={() => setDeleteId(b.id)} className="p-2 text-slate-400 rounded-full del-btn">
+                    <button onClick={() => setDeleteId(b.id)} className="p-2 text-slate-400 rounded-full del-btn neu-pill">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     </button>
                   </td>
@@ -109,7 +109,7 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
       {deleteId && (
         <div className="fixed inset-0 bg-black/40 dark:bg-black/60 flex items-center justify-center p-6 z-[100] a-fade-in">
           <div className="neu-raised rounded-3xl p-6 max-w-xs w-full text-center a-scale-in">
-            <div className="w-10 h-10 rounded-full neu-inset flex items-center justify-center mx-auto mb-3">
+            <div className="w-10 h-10 rounded-full neu-concave flex items-center justify-center mx-auto mb-3">
               <svg className="w-5 h-5 text-[#DC143C]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
             </div>
             <h3 className="text-lg font-extrabold mb-1.5 text-slate-700 dark:text-slate-100">בטוח?</h3>
