@@ -1,11 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Connected Grid: 4 rounded squares representing community units -->
-  <!-- Top-left -->
-  <rect x="6" y="6" width="23" height="23" rx="5" fill="#0f172a"/>
-  <!-- Top-right -->
-  <rect x="35" y="6" width="23" height="23" rx="5" fill="#0f172a"/>
-  <!-- Bottom-left -->
-  <rect x="6" y="35" width="23" height="23" rx="5" fill="#0f172a"/>
-  <!-- Bottom-right (accent — the unique unit) -->
-  <rect x="35" y="35" width="23" height="23" rx="5" fill="#0ea5e9"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Outer circle ring -->
+  <circle cx="32" cy="32" r="29" stroke="#475569" stroke-width="4" fill="none"/>
+
+  <!-- Back tall peak -->
+  <polygon points="30,8 46,44 14,44" fill="none" stroke="#475569" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Ridge line on tall peak -->
+  <line x1="30" y1="8" x2="38" y2="26" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Front smaller peak -->
+  <polygon points="20,24 34,44 6,44" fill="none" stroke="#475569" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Ridge line on front peak -->
+  <line x1="20" y1="24" x2="14" y2="36" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- "19" dark badge -->
+  <rect x="38" y="34" width="16" height="13" rx="3" fill="#475569"/>
+  <text x="46" y="44.5" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="10" fill="#e0e5ec">19</text>
 </svg>

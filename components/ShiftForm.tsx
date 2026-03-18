@@ -42,8 +42,8 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
     } catch (err) { setError('שגיאה בשמירת הנתונים'); console.error(err); }
   };
 
-  const inputCls = "w-full px-4 py-3 neu-inset rounded-full outline-none text-slate-700 dark:text-slate-200 font-medium placeholder:text-slate-400 transition-all duration-200";
-  const selCls = "px-3 py-3 neu-inset rounded-full outline-none text-slate-700 dark:text-slate-200 font-semibold text-base text-center appearance-none transition-all duration-200";
+  const inputCls = "w-full px-4 py-3 glass-input rounded-full outline-none text-slate-700 dark:text-slate-200 font-medium placeholder:text-slate-400 transition-all duration-200";
+  const selCls = "px-3 py-3 glass-input rounded-full outline-none text-slate-700 dark:text-slate-200 font-semibold text-base text-center appearance-none transition-all duration-200";
   const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
   const minutes = ['00', '15', '30', '45'];
   const parse = (t: string) => { const [h, m] = t.split(':'); return { h: h || '00', m: m || '00' }; };
@@ -56,7 +56,7 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
           <h2 className="text-xl font-extrabold text-slate-700 dark:text-slate-100 tracking-tight">הוספת משמרת טעינה</h2>
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-0.5">מלא את הפרטים למטה</p>
         </div>
-        <button onClick={onCancel} className="w-9 h-9 rounded-full neu-pill flex items-center justify-center text-slate-400">
+        <button onClick={onCancel} className="w-9 h-9 rounded-full glass-btn flex items-center justify-center text-slate-400">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
       </div>
@@ -86,15 +86,15 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
           </div>
         </div>
         <div className="flex gap-3 a-fade-up a-d4">
-          <button type="button" onClick={onCancel} className="flex-1 py-3.5 rounded-full font-bold text-slate-500 text-sm neu-btn">ביטול</button>
-          <button type="submit" className="flex-[2] font-bold py-3.5 rounded-full text-base flex items-center justify-center gap-2 group neu-btn-primary">
+          <button type="button" onClick={onCancel} className="flex-1 py-3.5 rounded-full font-bold text-slate-500 text-sm glass-btn">ביטול</button>
+          <button type="submit" className="flex-[2] font-bold py-3.5 rounded-full text-base flex items-center justify-center gap-2 group glass-btn-primary">
             <span>הוסף</span>
             <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 spring" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
           </button>
         </div>
       </form>
       {error && (
-        <div className="mt-6 p-4 rounded-2xl text-[#DC143C] text-sm font-semibold flex items-center gap-3 a-scale-in bg-red-50 dark:bg-red-900/15 neu-inset">
+        <div className="mt-6 p-4 rounded-3xl text-red-500 text-sm font-semibold flex items-center gap-3 a-scale-in bg-red-50 dark:bg-red-500/10">
           <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-10a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
           {error}
         </div>

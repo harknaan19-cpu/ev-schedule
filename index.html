@@ -6,8 +6,8 @@
     <title>הר כנען 19</title>
     <link rel="icon" type="image/svg+xml" href="./logo.svg" />
     <link rel="manifest" href="./manifest.json" />
-    <meta name="theme-color" content="#e0e5ec" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#2a2d3e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="apple-touch-icon" href="./logo-192.png" />
@@ -17,9 +17,7 @@
         darkMode: 'class',
         theme: {
           extend: {
-            fontFamily: {
-              assistant: ['Assistant', 'sans-serif'],
-            },
+            fontFamily: { assistant: ['Assistant', 'sans-serif'] },
           },
         },
       }
@@ -30,85 +28,197 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap');
-      body { font-family: 'Assistant', sans-serif; background: #e0e5ec; }
-      .dark body, html.dark { background: #2a2d3e; }
-      html { background: #e0e5ec; }
-      html.dark { background: #2a2d3e; }
 
-      /* ── Neumorphism base surfaces ── */
-      .neu-bg {
-        background: #e0e5ec;
+      /* ── Base ── */
+      body { font-family: 'Assistant', sans-serif; }
+      html { background: #f0f4f8; }
+      html.dark { background: #0f1117; }
+
+      .glass-bg {
+        background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #f0f4f8 100%);
         min-height: 100vh;
       }
-      .dark .neu-bg {
-        background: #2a2d3e;
+      .dark .glass-bg {
+        background: linear-gradient(135deg, #0f1117 0%, #1a1d2e 50%, #0f1117 100%);
       }
 
-      /* Header — raised bottom edge */
-      .neu-header {
-        background: #e0e5ec;
-        box-shadow: 0 4px 8px #b8bcc4;
+      /* ── Floating orbs ── */
+      .glass-orbs::before,
+      .glass-orbs::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.5;
+        animation: floatOrb 20s ease-in-out infinite alternate;
       }
-      .dark .neu-header {
-        background: #2a2d3e;
-        box-shadow: 0 4px 8px #181a2a;
+      .glass-orbs::before {
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(155,27,94,0.12), transparent 70%);
+        top: -100px; right: -100px;
+      }
+      .glass-orbs::after {
+        width: 350px; height: 350px;
+        background: radial-gradient(circle, rgba(155,27,94,0.08), transparent 70%);
+        bottom: 20%; left: -80px;
+        animation-delay: -10s;
+      }
+      .dark .glass-orbs::before {
+        background: radial-gradient(circle, rgba(155,27,94,0.06), transparent 70%);
+      }
+      .dark .glass-orbs::after {
+        background: radial-gradient(circle, rgba(155,27,94,0.04), transparent 70%);
+      }
+      @keyframes floatOrb {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(40px, -30px) scale(1.1); }
       }
 
-      /* Raised surface — extruded from background */
-      .neu-raised {
-        background: #e0e5ec;
+      /* ── Glass surfaces ── */
+      .glass-card {
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.5);
         border-radius: 1.5rem;
-        box-shadow: 5px 5px 10px #b8bcc4, -5px -5px 10px #f0f5fc;
       }
-      .dark .neu-raised {
-        background: #2a2d3e;
-        box-shadow: 5px 5px 10px #1e2030, -5px -5px 10px #36394c;
-      }
-
-      /* Flat raised — subtler extrusion for smaller elements */
-      .neu-flat {
-        background: #e0e5ec;
-        border-radius: 1rem;
-        box-shadow: 3px 3px 8px #b8bcc4, -3px -3px 8px #f0f5fc;
-      }
-      .dark .neu-flat {
-        background: #2a2d3e;
-        box-shadow: 3px 3px 8px #1e2030, -3px -3px 8px #36394c;
+      .dark .glass-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
       }
 
-      /* Inset / pressed — for inputs, active states */
-      .neu-inset {
-        background: #e0e5ec;
-        border-radius: 1rem;
-        box-shadow: inset 2px 2px 5px #b8bcc4, inset -2px -2px 5px #f0f5fc;
+      .glass-card-subtle {
+        background: rgba(255,255,255,0.35);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 1.25rem;
+      }
+      .dark .glass-card-subtle {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+      }
+
+      /* Header */
+      .glass-header {
+        background: rgba(240,244,248,0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255,255,255,0.4);
+      }
+      .dark .glass-header {
+        background: rgba(15,17,23,0.8);
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+      }
+
+      /* ── Inputs ── */
+      .glass-input {
+        background: rgba(255,255,255,0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.4);
+        border-radius: 9999px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .glass-input:focus {
+        border-color: rgba(155,27,94,0.35);
+        box-shadow: 0 0 0 3px rgba(155,27,94,0.08);
+      }
+      .dark .glass-input {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .dark .glass-input:focus {
+        border-color: rgba(155,27,94,0.3);
+        box-shadow: 0 0 0 3px rgba(155,27,94,0.06);
+      }
+
+      /* ── Buttons ── */
+      .glass-btn {
+        background: rgba(255,255,255,0.5);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.4);
+        border-radius: 9999px;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .glass-btn:hover { background: rgba(255,255,255,0.7); transform: scale(1.02); }
+      .glass-btn:active { transform: scale(0.97); transition-duration: 0.1s; }
+      .dark .glass-btn {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .dark .glass-btn:hover { background: rgba(255,255,255,0.08); }
+
+      .glass-btn-primary {
+        background: linear-gradient(135deg, #9B1B5E, #b84d7e);
+        color: white;
+        border-radius: 9999px;
+        border: none;
+        box-shadow: none;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .glass-btn-primary:hover { transform: scale(1.03); }
+      .glass-btn-primary:active { transform: scale(0.97); transition-duration: 0.1s; }
+      .dark .glass-btn-primary {
+        box-shadow: none;
+      }
+
+      .glass-btn-danger {
+        background: linear-gradient(135deg, #ef4444, #f97316);
+        color: white;
+        border-radius: 9999px;
+        border: none;
+        box-shadow: none;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .glass-btn-danger:hover { transform: scale(1.03); }
+      .glass-btn-danger:active { transform: scale(0.97); transition-duration: 0.1s; }
+
+      /* FAB */
+      .glass-fab {
+        background: linear-gradient(135deg, #9B1B5E, #b84d7e);
+        border-radius: 9999px;
+        box-shadow: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         border: none;
       }
-      .dark .neu-inset {
-        background: #2a2d3e;
-        box-shadow: inset 2px 2px 5px #1e2030, inset -2px -2px 5px #36394c;
+      .glass-fab:hover { transform: scale(1.08); }
+      .glass-fab:active { transform: scale(0.94); transition-duration: 0.1s; }
+
+      /* Tab active */
+      .glass-tab-active {
+        background: rgba(255,255,255,0.7);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      }
+      .dark .glass-tab-active {
+        background: rgba(255,255,255,0.08);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       }
 
-      /* Concave — deeper inset for active buttons */
-      .neu-concave {
-        background: linear-gradient(145deg, #d1d6de, #eaf0f8);
-        border-radius: 1rem;
-        box-shadow: inset 2px 2px 4px #b8bcc4, inset -2px -2px 4px #f0f5fc;
+      /* Pill badge */
+      .glass-pill {
+        background: rgba(255,255,255,0.4);
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 9999px;
       }
-      .dark .neu-concave {
-        background: linear-gradient(145deg, #232536, #313446);
-        box-shadow: inset 2px 2px 4px #1e2030, inset -2px -2px 4px #36394c;
+      .dark .glass-pill {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
       }
 
-      /* Convex — raised with gradient highlight */
-      .neu-convex {
-        background: linear-gradient(145deg, #eaf0f8, #d1d6de);
-        border-radius: 1rem;
-        box-shadow: 4px 4px 10px #b8bcc4, -4px -4px 10px #f0f5fc;
+      /* Delete button */
+      .del-btn {
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
       }
-      .dark .neu-convex {
-        background: linear-gradient(145deg, #313446, #232536);
-        box-shadow: 4px 4px 10px #1e2030, -4px -4px 10px #36394c;
+      .del-btn:hover { transform: scale(1.15); color: #ef4444; }
+      .del-btn:active { transform: scale(0.9); transition-duration: 0.08s; }
+
+      /* Row hover */
+      .row-hover {
+        transition: background-color 0.3s ease;
       }
+      .row-hover:hover { background-color: rgba(155,27,94,0.03); }
+      .dark .row-hover:hover { background-color: rgba(155,27,94,0.05); }
 
       /* ── Animations ── */
       @keyframes fadeInUp {
@@ -134,180 +244,18 @@
       .a-d6 { animation-delay: 300ms; }
       .a-d7 { animation-delay: 350ms; }
       .a-d8 { animation-delay: 400ms; }
-
       .spring { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-
-      /* GPU acceleration for animated elements */
-      .neu-hover, .neu-btn, .neu-btn-primary, .neu-btn-danger {
-        will-change: transform;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-      }
-
-      /* Hover: push down into surface */
-      .neu-hover {
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .neu-hover:hover {
-        box-shadow: 2px 2px 5px #b8bcc4, -2px -2px 5px #f0f5fc;
-        transform: scale(0.985);
-      }
-      .dark .neu-hover:hover {
-        box-shadow: 2px 2px 5px #1e2030, -2px -2px 5px #36394c;
-      }
-      .neu-hover:active {
-        box-shadow: inset 2px 2px 4px #b8bcc4, inset -2px -2px 4px #f0f5fc;
-        transform: scale(0.97);
-        transition-duration: 0.1s;
-      }
-      .dark .neu-hover:active {
-        box-shadow: inset 2px 2px 4px #1e2030, inset -2px -2px 4px #36394c;
-      }
-
-      /* Button press — goes from raised to inset */
-      .neu-btn {
-        background: #e0e5ec;
-        border-radius: 9999px;
-        box-shadow: 3px 3px 8px #b8bcc4, -3px -3px 8px #f0f5fc;
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        border: none;
-      }
-      .dark .neu-btn {
-        background: #2a2d3e;
-        box-shadow: 3px 3px 8px #1e2030, -3px -3px 8px #36394c;
-      }
-      .neu-btn:hover {
-        box-shadow: 2px 2px 5px #b8bcc4, -2px -2px 5px #f0f5fc;
-        transform: scale(1.02);
-      }
-      .dark .neu-btn:hover {
-        box-shadow: 2px 2px 5px #1e2030, -2px -2px 5px #36394c;
-      }
-      .neu-btn:active {
-        box-shadow: inset 2px 2px 5px #b8bcc4, inset -2px -2px 5px #f0f5fc;
-        transform: scale(0.97);
-        transition-duration: 0.1s;
-      }
-      .dark .neu-btn:active {
-        box-shadow: inset 2px 2px 5px #1e2030, inset -2px -2px 5px #36394c;
-      }
-
-      /* Primary button */
-      .neu-btn-primary {
-        background: linear-gradient(145deg, #eaf0f8, #d1d6de);
-        color: #DC143C;
-        border-radius: 9999px;
-        box-shadow: 5px 5px 10px #b8bcc4, -5px -5px 10px #f0f5fc;
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        border: none;
-      }
-      .dark .neu-btn-primary {
-        background: linear-gradient(145deg, #313446, #232536);
-        color: #E8556D;
-        box-shadow: 5px 5px 10px #1e2030, -5px -5px 10px #36394c;
-      }
-      .neu-btn-primary:hover {
-        transform: scale(1.04);
-      }
-      .dark .neu-btn-primary:hover {
-        transform: scale(1.04);
-      }
-      .neu-btn-primary:active {
-        transform: scale(0.97);
-        box-shadow: inset 2px 2px 5px #b8bcc4, inset -2px -2px 5px #f0f5fc;
-        transition-duration: 0.1s;
-      }
-      .dark .neu-btn-primary:active {
-        box-shadow: inset 2px 2px 5px #1e2030, inset -2px -2px 5px #36394c;
-      }
-
-      /* Danger button */
-      .neu-btn-danger {
-        background: linear-gradient(145deg, #eaf0f8, #d1d6de);
-        color: #B91C1C;
-        border-radius: 9999px;
-        box-shadow: 5px 5px 10px #b8bcc4, -5px -5px 10px #f0f5fc;
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        border: none;
-      }
-      .dark .neu-btn-danger {
-        background: linear-gradient(145deg, #313446, #232536);
-        color: #E8556D;
-        box-shadow: 5px 5px 10px #1e2030, -5px -5px 10px #36394c;
-      }
-      .neu-btn-danger:hover { transform: scale(1.04); }
-      .neu-btn-danger:active {
-        transform: scale(0.97);
-        box-shadow: inset 2px 2px 5px #b8bcc4, inset -2px -2px 5px #f0f5fc;
-        transition-duration: 0.1s;
-      }
-      .dark .neu-btn-danger:active {
-        box-shadow: inset 2px 2px 5px #1e2030, inset -2px -2px 5px #36394c;
-      }
-
-      /* Delete icon button */
-      .del-btn {
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-      }
-      .del-btn:hover { transform: scale(1.15); color: #DC143C; }
-      .del-btn:active { transform: scale(0.9); transition-duration: 0.08s; }
-
-      /* Row hover */
-      .row-hover {
-        transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      .row-hover:hover {
-        background-color: rgba(0,0,0,0.015);
-      }
-      .dark .row-hover:hover {
-        background-color: rgba(255,255,255,0.02);
-      }
-
-      /* FAB — prominent floating action button */
-      .neu-fab {
-        background: linear-gradient(145deg, #f0f5fc, #d1d6de);
-        border-radius: 9999px;
-        box-shadow: 6px 6px 14px #b8bcc4, -6px -6px 14px #f0f5fc, inset 0 1px 0 rgba(255,255,255,0.3);
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        border: none;
-        will-change: transform;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-      }
-      .dark .neu-fab {
-        background: linear-gradient(145deg, #36394c, #232536);
-        box-shadow: 6px 6px 14px #181a2a, -6px -6px 14px #3c3f52, inset 0 1px 0 rgba(255,255,255,0.04);
-      }
-      .neu-fab:hover { transform: scale(1.06); }
-      .neu-fab:active {
-        transform: scale(0.94);
-        box-shadow: inset 3px 3px 6px #b8bcc4, inset -3px -3px 6px #f0f5fc;
-        transition-duration: 0.1s;
-      }
-      .dark .neu-fab:active {
-        box-shadow: inset 3px 3px 6px #181a2a, inset -3px -3px 6px #3c3f52;
-      }
-
-      /* Neumorphic pill badge */
-      .neu-pill {
-        background: #e0e5ec;
-        border-radius: 9999px;
-        box-shadow: 2px 2px 4px #b8bcc4, -2px -2px 4px #f0f5fc;
-      }
-      .dark .neu-pill {
-        background: #2a2d3e;
-        box-shadow: 2px 2px 4px #1e2030, -2px -2px 4px #36394c;
-      }
 
       /* ── Flatpickr ── */
       .flatpickr-calendar, .flatpickr-calendar *, .flatpickr-days, .dayContainer { box-sizing: border-box !important; }
       .flatpickr-calendar {
         font-family: 'Assistant', sans-serif;
         border-radius: 1.5rem !important;
-        box-shadow: 5px 5px 12px #b8bcc4, -5px -5px 12px #f0f5fc !important;
-        border: none !important;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+        border: 1px solid rgba(255,255,255,0.4) !important;
         padding: 4px !important;
-        background: #e0e5ec !important;
+        background: rgba(255,255,255,0.85) !important;
+        backdrop-filter: blur(16px) !important;
         margin-top: 4px;
         width: 290px !important;
         font-size: 13px !important;
@@ -320,27 +268,27 @@
         .flatpickr-days, .dayContainer { width: 300px !important; min-width: 300px !important; max-width: 300px !important; }
       }
       .dark .flatpickr-calendar {
-        background: #2a2d3e !important;
-        box-shadow: 5px 5px 12px #1e2030, -5px -5px 12px #36394c !important;
+        background: rgba(26,29,46,0.95) !important;
+        border: 1px solid rgba(255,255,255,0.06) !important;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
       }
       .flatpickr-day { max-width: 36px !important; height: 36px !important; line-height: 36px !important; border-radius: 50% !important; margin: 2px !important; }
       @media (min-width: 640px) { .flatpickr-day { max-width: 39px !important; height: 39px !important; line-height: 39px !important; } }
       .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
-        background: #334155 !important; border-color: #334155 !important; color: #fff !important;
-        box-shadow: inset 2px 2px 4px rgba(0,0,0,0.2), inset -1px -1px 2px rgba(255,255,255,0.05) !important;
+        background: #9B1B5E !important; border-color: #9B1B5E !important; color: #fff !important;
       }
-      .dark .flatpickr-day.selected { background: #DC143C !important; border-color: #DC143C !important; }
-      .flatpickr-day:hover { background: #d1d6de !important; }
-      .dark .flatpickr-day:not(.flatpickr-disabled):hover { background: #36394c !important; }
+      .dark .flatpickr-day.selected { background: #9B1B5E !important; border-color: #9B1B5E !important; }
+      .flatpickr-day:hover { background: rgba(155,27,94,0.1) !important; }
+      .dark .flatpickr-day:not(.flatpickr-disabled):hover { background: rgba(155,27,94,0.15) !important; }
       .dark .flatpickr-day:not(.flatpickr-disabled), .dark .flatpickr-weekday, .dark .flatpickr-month, .dark .flatpickr-current-month, .dark .flatpickr-monthDropdown-months { color: #e2e8f0 !important; }
       .dark .flatpickr-day.flatpickr-disabled { color: rgba(255,255,255,0.15) !important; }
       .dark .flatpickr-prev-month, .dark .flatpickr-next-month { fill: #e2e8f0 !important; }
-      .flatpickr-time { border-top: 1px solid #c8cdd6 !important; margin-top: 0.25rem !important; height: 35px !important; line-height: 35px !important; }
+      .flatpickr-time { border-top: 1px solid rgba(0,0,0,0.06) !important; margin-top: 0.25rem !important; height: 35px !important; line-height: 35px !important; }
       @media (min-width: 640px) { .flatpickr-time { height: 40px !important; line-height: 40px !important; margin-top: 0.5rem !important; } }
-      .dark .flatpickr-time { border-top-color: #36394c !important; }
+      .dark .flatpickr-time { border-top-color: rgba(255,255,255,0.06) !important; }
       .dark .flatpickr-time input, .dark .flatpickr-time .flatpickr-am-pm { color: #e2e8f0 !important; }
-      .flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover { background: #d1d6de !important; border-radius: 0.5rem !important; }
-      .dark .flatpickr-time input:hover, .dark .flatpickr-time .flatpickr-am-pm:hover { background: #36394c !important; }
+      .flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover { background: rgba(155,27,94,0.08) !important; border-radius: 0.5rem !important; }
+      .dark .flatpickr-time input:hover, .dark .flatpickr-time .flatpickr-am-pm:hover { background: rgba(155,27,94,0.12) !important; }
       .flatpickr-months .flatpickr-month { height: 30px !important; }
       @media (min-width: 640px) { .flatpickr-months .flatpickr-month { height: 35px !important; } }
       .flatpickr-innerContainer { margin-top: 2px; }
