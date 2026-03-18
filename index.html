@@ -6,10 +6,9 @@
     <title>הר כנען 19</title>
     <link rel="icon" type="image/svg+xml" href="./logo.svg" />
     <link rel="manifest" href="./manifest.json" />
-    <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f0f4f8" id="meta-theme" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="apple-touch-icon" href="./logo-192.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -311,7 +310,7 @@
 </script>
 </head>
   <body class="transition-colors duration-200">
-    <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark')</script>
+    <script>if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('meta-theme').setAttribute('content','#0f1117')}</script>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>
