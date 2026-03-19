@@ -19,7 +19,7 @@ const App: React.FC = () => {
   const [loadingBookings, setLoadingBookings] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
-  const [historyMonth, setHistoryMonth] = useState<number | null>(new Date().getMonth());
+  const [historyMonth, setHistoryMonth] = useState<number | null>(null);
   const [historyYear, setHistoryYear] = useState<number | null>(new Date().getFullYear());
   const [showStats, setShowStats] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
@@ -181,12 +181,13 @@ const App: React.FC = () => {
           )}
 
           {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-24 gap-5 a-fade-in">
-              <div className="relative w-14 h-14 glass-card rounded-full flex items-center justify-center">
-                <div className="w-9 h-9 border-3 border-slate-200/50 dark:border-white/5 rounded-full"></div>
-                <div className="absolute w-9 h-9 border-3 border-t-[#B22222] rounded-full animate-spin"></div>
+            <div className="flex flex-col items-center justify-center py-28 gap-6 a-fade-in">
+              <div className="relative w-20 h-20">
+                <div className="absolute inset-0 rounded-full border-4 border-slate-200/30 dark:border-white/5"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#B22222] animate-spin" style={{ animationDuration: '0.8s' }}></div>
+                <div className="absolute inset-2 rounded-full border-4 border-transparent border-b-[#B22222]/40 animate-spin" style={{ animationDuration: '1.4s', animationDirection: 'reverse' }}></div>
               </div>
-              <span className="text-slate-400 font-bold text-xs tracking-[0.2em] uppercase">טוען נתונים</span>
+              <span className="text-slate-400 dark:text-slate-500 font-bold text-xs tracking-[0.25em] uppercase animate-pulse">טוען נתונים...</span>
             </div>
           ) : activeTab === 'charging' ? (
             <ShiftList shifts={shifts} readOnly={showHistory} />
