@@ -77,8 +77,8 @@ const App: React.FC = () => {
         <div className="max-w-5xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
           <div className="flex items-center">
             <img src="./logo_v3.png" alt="לוגו" className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 object-contain -my-4 -ml-2" />
-            <h1 className="text-lg md:text-2xl font-extrabold tracking-tight truncate mr-1">
-              הר כנען <span className="text-[#E53E3E] dark:text-[#ef6b6b]">19</span>
+            <h1 className="text-lg md:text-2xl font-extrabold tracking-tight truncate mr-0 mt-1.5">
+              הר כנען
             </h1>
           </div>
           <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-10 h-10 rounded-full glass-btn flex items-center justify-center">
@@ -106,7 +106,7 @@ const App: React.FC = () => {
               className={`flex-1 py-2.5 md:py-3 px-4 rounded-full font-bold text-sm md:text-base transition-all duration-300 spring flex items-center justify-center gap-2 ${
                 activeTab === 'club' ? 'glass-tab-active text-slate-800 dark:text-white' : 'text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300'
               }`}>
-              <svg className={`w-4 h-4 ${activeTab === 'club' ? 'text-[#E53E3E]' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+              <svg className={`w-4 h-4 ${activeTab === 'club' ? 'text-[#B22222]' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
               מועדון דיירים
             </button>
           </div>
@@ -120,7 +120,7 @@ const App: React.FC = () => {
             <div className="flex items-center gap-2">
               <button onClick={() => { const next = !showHistory; setShowHistory(next); setShowStats(next); }}
                 className={`text-[10px] md:text-xs font-bold px-3.5 py-1.5 rounded-full transition-all duration-300 spring flex items-center gap-1.5 ${
-                  showHistory ? 'glass-tab-active text-[#E53E3E] dark:text-[#ef6b6b]' : 'glass-btn text-slate-400'
+                  showHistory ? 'glass-tab-active text-[#B22222] dark:text-[#D44A5A]' : 'glass-btn text-slate-400'
                 }`}>
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 היסטוריה
@@ -146,7 +146,7 @@ const App: React.FC = () => {
                 </select>
                 <button onClick={() => setShowStats(!showStats)}
                   className={`mr-auto text-[10px] md:text-xs font-bold px-3.5 py-1.5 rounded-full transition-all duration-300 spring flex items-center gap-1.5 ${
-                    showStats ? 'glass-tab-active text-[#E53E3E] dark:text-[#ef6b6b]' : 'glass-btn text-slate-400'
+                    showStats ? 'glass-tab-active text-[#B22222] dark:text-[#D44A5A]' : 'glass-btn text-slate-400'
                   }`}>
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                   סטטיסטיקה
@@ -155,7 +155,7 @@ const App: React.FC = () => {
               {showStats && (
                 <div className="glass-card rounded-3xl p-4 md:p-6 a-scale-in">
                   <h3 className="text-sm font-bold mb-4 tracking-tight flex items-center gap-2">
-                    <svg className="w-4 h-4 text-[#E53E3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    <svg className="w-4 h-4 text-[#B22222]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                     שימוש לפי דייר — {historyMonth !== null ? MONTH_NAMES[historyMonth] : 'כל החודשים'} {historyYear !== null ? historyYear : 'כל השנים'}
                   </h3>
                   {usageStats.length === 0 ? (
@@ -184,7 +184,7 @@ const App: React.FC = () => {
             <div className="flex flex-col items-center justify-center py-24 gap-5 a-fade-in">
               <div className="relative w-14 h-14 glass-card rounded-full flex items-center justify-center">
                 <div className="w-9 h-9 border-3 border-slate-200/50 dark:border-white/5 rounded-full"></div>
-                <div className="absolute w-9 h-9 border-3 border-t-[#E53E3E] rounded-full animate-spin"></div>
+                <div className="absolute w-9 h-9 border-3 border-t-[#B22222] rounded-full animate-spin"></div>
               </div>
               <span className="text-slate-400 font-bold text-xs tracking-[0.2em] uppercase">טוען נתונים</span>
             </div>
