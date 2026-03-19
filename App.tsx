@@ -182,12 +182,13 @@ const App: React.FC = () => {
 
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-28 gap-6 a-fade-in">
-              <div className="relative w-20 h-20">
-                <div className="absolute inset-0 rounded-full border-4 border-slate-200/30 dark:border-white/5"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#B22222] animate-spin" style={{ animationDuration: '0.8s' }}></div>
-                <div className="absolute inset-2 rounded-full border-4 border-transparent border-b-[#B22222]/40 animate-spin" style={{ animationDuration: '1.4s', animationDirection: 'reverse' }}></div>
+              <div className="relative w-12 h-12">
+                <svg className="animate-spin" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="25" cy="25" r="20" stroke="currentColor" strokeWidth="4" className="text-slate-200/40 dark:text-white/5" />
+                  <path d="M25 5a20 20 0 0117.32 10" stroke="#B22222" strokeWidth="4" strokeLinecap="round" />
+                </svg>
               </div>
-              <span className="text-slate-400 dark:text-slate-500 font-bold text-xs tracking-[0.25em] uppercase animate-pulse">טוען נתונים...</span>
+              <span className="text-slate-400 dark:text-slate-500 font-semibold text-xs tracking-[0.2em]">טוען נתונים</span>
             </div>
           ) : activeTab === 'charging' ? (
             <ShiftList shifts={shifts} readOnly={showHistory} />
