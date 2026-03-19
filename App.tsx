@@ -76,7 +76,7 @@ const App: React.FC = () => {
       <header className="sticky top-0 z-40 w-full glass-header a-fade-in" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="max-w-5xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
           <div className="flex items-center">
-            <img src="./logo_v3.png" alt="לוגו" className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 object-contain -my-4 -ml-2" />
+            <img src="./logo_v4.png" alt="לוגו" className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 object-contain -my-4 -ml-2" />
             <h1 className="text-lg md:text-2xl font-extrabold tracking-tight truncate mr-1">
               הר כנען <span className="text-[#E53E3E] dark:text-[#ef6b6b]">19</span>
             </h1>
