@@ -15,6 +15,14 @@ const DAY_COLORS = [
   'bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300',
 ];
 
+const BellIcon = ({ reminder }: { reminder: number }) => (
+  <span title={`תזכורת ${reminder} דקות לפני`}>
+    <svg className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+    </svg>
+  </span>
+);
+
 const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const confirmDelete = async () => { if (deleteId) { await remove(ref(db, `schedule-v3/${deleteId}`)); setDeleteId(null); } };
@@ -46,6 +54,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
                 <span className="text-slate-500 dark:text-slate-400 font-semibold text-sm">{shift.scheduledDate}</span>
               </div>
               <div className="flex items-center justify-end gap-3 font-mono" dir="ltr">
+                {shift.reminder && <BellIcon reminder={shift.reminder} />}
                 <span className="text-lg font-bold leading-none">{shift.startTime}</span>
                 <svg className="w-4 h-4 text-slate-300 dark:text-slate-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 <span className="text-lg font-bold leading-none">{shift.endTime}</span>
@@ -79,10 +88,13 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
                 <span className={`${DAY_COLORS[shift.day]} text-xs px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap`}>{DAY_NAMES[shift.day]}</span>
                 <span className="text-slate-400 text-sm font-semibold whitespace-nowrap">{shift.scheduledDate}</span>
               </div>
-              <div className="flex items-center gap-1.5 glass-pill px-2.5 py-1.5" dir="ltr">
-                <span className="font-mono text-base font-bold leading-none">{shift.startTime}</span>
-                <svg className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                <span className="font-mono text-base font-bold leading-none">{shift.endTime}</span>
+              <div className="flex items-center gap-1.5">
+                {shift.reminder && <BellIcon reminder={shift.reminder} />}
+                <div className="flex items-center gap-1.5 glass-pill px-2.5 py-1.5" dir="ltr">
+                  <span className="font-mono text-base font-bold leading-none">{shift.startTime}</span>
+                  <svg className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  <span className="font-mono text-base font-bold leading-none">{shift.endTime}</span>
+                </div>
               </div>
             </div>
           </div>

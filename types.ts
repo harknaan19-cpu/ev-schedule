@@ -7,6 +7,7 @@ export interface Shift {
   startTime: string; // HH:mm
   endTime: string; // HH:mm
   timestamp: number;
+  reminder?: number; // minutes before shift, e.g. 15, 30, 45, 60
 }
 
 export interface ShiftFormData {

@@ -11,6 +11,9 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
   const [startTime, setStartTime] = useState('22:00');
   const [endTime, setEndTime] = useState('06:00');
   const [error, setError] = useState<string | null>(null);
+  const [reminderEnabled, setReminderEnabled] = useState(false);
+  const [reminderMinutes, setReminderMinutes] = useState(15);
+  const [bellAnimating, setBellAnimating] = useState(false);
   const dateInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -23,6 +26,36 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
     }
   }, []);
 
+  const handleToggleReminder = (enabled: boolean) => {
+    setReminderEnabled(enabled);
+    if (enabled) {
+      setBellAnimating(true);
+      setTimeout(() => setBellAnimating(false), 800);
+      // Request permission early so it's ready at submit time
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    }
+  };
+
+  const scheduleReminder = (shiftDate: string, shiftStart: string, shiftEnd: string, mins: number, user: string) => {
+    const { start } = getShiftTimes(shiftDate, shiftStart, shiftEnd);
+    const reminderTime = start.getTime() - mins * 60 * 1000;
+    const delay = reminderTime - Date.now();
+
+    const fireNotification = () => {
+      const msg = `${user}, המשמרת שלך מתחילה בעוד ${mins} דקות (${shiftStart})`;
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('תזכורת משמרת טעינה 🔔', { body: msg, icon: './logo-192.png' });
+      }
+    };
+
+    if (delay > 0) {
+      setTimeout(fireNotification, delay);
+    }
+  };
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setError(null);
     if (!username || !date || !startTime || !endTime) { setError('יש למלא את כל השדות'); return; }
@@ -33,9 +66,12 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
       const dayIndex = new Date(y, m - 1, d).getDay();
       const { start } = getShiftTimes(date, startTime, endTime);
       const key = `${username}-${date.replace(/\//g, '-')}-${startTime.replace(/:/g, '')}-${endTime.replace(/:/g, '')}`;
-      await set(ref(db, `schedule-v3/${key}`), { username, day: dayIndex, scheduledDate: date, startTime, endTime, timestamp: start.getTime() });
+      await set(ref(db, `schedule-v3/${key}`), { username, day: dayIndex, scheduledDate: date, startTime, endTime, timestamp: start.getTime(), ...(reminderEnabled ? { reminder: reminderMinutes } : {}) });
+      if (reminderEnabled) {
+        scheduleReminder(date, startTime, endTime, reminderMinutes, username);
+      }
       setUsername(''); const t = new Date(); setDate(`${t.getDate().toString().padStart(2, '0')}/${(t.getMonth() + 1).toString().padStart(2, '0')}/${t.getFullYear()}`);
-      setStartTime('22:00'); setEndTime('06:00');
+      setStartTime('22:00'); setEndTime('06:00'); setReminderEnabled(false); setReminderMinutes(15);
       // @ts-ignore
       if (dateInputRef.current) dateInputRef.current._flatpickr.clear();
       onSuccess();
@@ -48,6 +84,7 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
   const minutes = ['00', '15', '30', '45'];
   const parse = (t: string) => { const [h, m] = t.split(':'); return { h: h || '00', m: m || '00' }; };
   const sp = parse(startTime), ep = parse(endTime);
+
 
   return (
     <div className="p-6 md:p-8">
@@ -85,7 +122,71 @@ const ShiftForm: React.FC<ShiftFormProps> = ({ existingShifts, onSuccess, onCanc
             </div>
           </div>
         </div>
-        <div className="flex gap-3 a-fade-up a-d4">
+
+
+        {/* Reminder section */}
+        <div className="a-fade-up a-d4">
+          <div className={`px-5 py-3 rounded-3xl glass-card transition-all duration-300 ${
+            reminderEnabled ? 'border-amber-200/60 dark:border-amber-500/15' : ''
+          }`}>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                  reminderEnabled ? 'bg-amber-100 dark:bg-amber-500/20' : 'bg-slate-100 dark:bg-white/5'
+                }`}>
+                  <svg className={`w-4 h-4 ${bellAnimating ? 'bell-ring' : ''} transition-colors duration-300 ${
+                    reminderEnabled ? 'text-amber-500' : 'text-slate-400 dark:text-slate-500'
+                  }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                </div>
+                <span className={`text-sm font-bold transition-colors duration-300 ${
+                  reminderEnabled ? 'text-amber-800 dark:text-amber-200' : 'text-slate-500 dark:text-slate-400'
+                }`}>
+                  להזכיר לך{' '}
+                  <select
+                    value={reminderMinutes}
+                    onChange={(e) => setReminderMinutes(Number(e.target.value))}
+                    className={`inline-flex px-1.5 py-0.5 rounded-lg text-sm font-bold appearance-none outline-none cursor-pointer transition-all duration-200 ${
+                      reminderEnabled
+                        ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-200/80 dark:border-amber-500/20'
+                        : 'bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200/60 dark:border-white/5'
+                    }`}
+                  >
+                    <option value={15}>15</option>
+                    <option value={30}>30</option>
+                    <option value={45}>45</option>
+                    <option value={60}>60</option>
+                  </select>
+                  {' '}דקות לפני?
+                </span>
+              </div>
+              <div className="flex gap-1.5 flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={() => handleToggleReminder(true)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ${
+                    reminderEnabled
+                      ? 'bg-amber-500 text-white shadow-sm'
+                      : 'glass-btn text-slate-400 hover:border-amber-300 hover:text-amber-600 dark:hover:border-amber-500/30 dark:hover:text-amber-400'
+                  }`}
+                >כן</button>
+                <button
+                  type="button"
+                  onClick={() => handleToggleReminder(false)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ${
+                    !reminderEnabled
+                      ? 'bg-slate-400 dark:bg-slate-600 text-white shadow-sm'
+                      : 'glass-btn text-slate-400 hover:border-slate-300 hover:text-slate-600 dark:hover:border-white/10 dark:hover:text-slate-300'
+                  }`}
+                >לא</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div className="flex gap-3 a-fade-up a-d5">
           <button type="button" onClick={onCancel} className="flex-1 py-3.5 rounded-full font-bold text-slate-500 text-sm glass-btn">ביטול</button>
           <button type="submit" className="flex-[2] font-bold py-3.5 rounded-full text-base flex items-center justify-center gap-2 group glass-btn-primary">
             <span>הוסף</span>

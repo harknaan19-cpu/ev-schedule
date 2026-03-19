@@ -243,6 +243,24 @@
       .a-d8 { animation-delay: 400ms; }
       .spring { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
 
+      /* ── Bell ring animation ── */
+      @keyframes bellRing {
+        0%   { transform: rotate(0deg); }
+        10%  { transform: rotate(14deg); }
+        20%  { transform: rotate(-12deg); }
+        30%  { transform: rotate(10deg); }
+        40%  { transform: rotate(-8deg); }
+        50%  { transform: rotate(6deg); }
+        60%  { transform: rotate(-4deg); }
+        70%  { transform: rotate(2deg); }
+        80%  { transform: rotate(-1deg); }
+        100% { transform: rotate(0deg); }
+      }
+      .bell-ring {
+        animation: bellRing 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        transform-origin: top center;
+      }
+
       /* ── Flatpickr ── */
       .flatpickr-calendar, .flatpickr-calendar *, .flatpickr-days, .dayContainer { box-sizing: border-box !important; }
       .flatpickr-calendar {
