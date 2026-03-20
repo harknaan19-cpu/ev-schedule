@@ -31,14 +31,14 @@
       /* ── Base ── */
       body { font-family: 'Assistant', sans-serif; background: #f0f4f8; }
       html { background: #f0f4f8; }
-      html.dark, html.dark body { background: #08090d; }
+      html.dark, html.dark body { background: #060709; }
 
       .glass-bg {
         background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #f0f4f8 100%);
         min-height: 100vh;
       }
       .dark .glass-bg {
-        background: linear-gradient(160deg, #08090d 0%, #111827 40%, #0c1220 70%, #08090d 100%);
+        background: #060709;
       }
 
       /* ── Floating orbs ── */
@@ -335,7 +335,7 @@
 </script>
 </head>
   <body class="transition-colors duration-200">
-    <script>if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('meta-theme').setAttribute('content','#08090d')}</script>
+    <script>if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('meta-theme').setAttribute('content','#060709')}</script>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>
