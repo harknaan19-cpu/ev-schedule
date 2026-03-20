@@ -28,7 +28,19 @@ const App: React.FC = () => {
     if (isDarkMode) { document.documentElement.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
     else { document.documentElement.classList.remove('dark'); localStorage.setItem('theme', 'light'); }
     const meta = document.getElementById('meta-theme');
-    if (meta) meta.setAttribute('content', isDarkMode ? '#060709' : '#f0f4f8');
+    if (meta) {
+      meta.setAttribute('content', isDarkMode ? '#060709' : '#f0f4f8');
+      // Force Safari to re-read theme-color by removing and re-adding the tag
+      const parent = meta.parentNode;
+      if (parent) {
+        const clone = meta.cloneNode(true) as HTMLElement;
+        clone.setAttribute('content', isDarkMode ? '#060709' : '#f0f4f8');
+        parent.removeChild(meta);
+        parent.appendChild(clone);
+      }
+    }
+    const statusMeta = document.querySelector('meta[name=apple-mobile-web-app-status-bar-style]');
+    if (statusMeta) statusMeta.setAttribute('content', isDarkMode ? 'black' : 'default');
   }, [isDarkMode]);
 
   useEffect(() => {
