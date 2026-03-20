@@ -31,14 +31,14 @@
       /* ── Base ── */
       body { font-family: 'Assistant', sans-serif; background: #f0f4f8; }
       html { background: #f0f4f8; }
-      html.dark, html.dark body { background: #0f1117; }
+      html.dark, html.dark body { background: #08090d; }
 
       .glass-bg {
         background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #f0f4f8 100%);
         min-height: 100vh;
       }
       .dark .glass-bg {
-        background: linear-gradient(135deg, #0f1117 0%, #1a1d2e 50%, #0f1117 100%);
+        background: linear-gradient(160deg, #08090d 0%, #111827 40%, #0c1220 70%, #08090d 100%);
       }
 
       /* ── Floating orbs ── */
@@ -63,10 +63,12 @@
         animation-delay: -10s;
       }
       .dark .glass-orbs::before {
-        background: radial-gradient(circle, rgba(178,34,34,0.06), transparent 70%);
+        background: radial-gradient(circle, rgba(178,34,34,0.15), transparent 70%);
+        opacity: 0.6;
       }
       .dark .glass-orbs::after {
-        background: radial-gradient(circle, rgba(178,34,34,0.04), transparent 70%);
+        background: radial-gradient(circle, rgba(120,40,80,0.1), transparent 70%);
+        opacity: 0.5;
       }
       @keyframes floatOrb {
         0% { transform: translate(0, 0) scale(1); }
@@ -82,8 +84,9 @@
         border-radius: 1.5rem;
       }
       .dark .glass-card {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+        box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
       }
 
       .glass-card-subtle {
@@ -94,8 +97,9 @@
         border-radius: 1.25rem;
       }
       .dark .glass-card-subtle {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.04);
+        box-shadow: 0 2px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03);
       }
 
       /* Header */
@@ -122,12 +126,12 @@
         box-shadow: 0 0 0 3px rgba(178,34,34,0.08);
       }
       .dark .glass-input {
-        background: rgba(255,255,255,0.04);
+        background: rgba(255,255,255,0.035);
         border: 1px solid rgba(255,255,255,0.06);
       }
       .dark .glass-input:focus {
-        border-color: rgba(178,34,34,0.3);
-        box-shadow: 0 0 0 3px rgba(178,34,34,0.06);
+        border-color: rgba(178,34,34,0.45);
+        box-shadow: 0 0 0 3px rgba(178,34,34,0.1);
       }
 
       /* ── Buttons ── */
@@ -141,10 +145,10 @@
       .glass-btn:hover { background: rgba(255,255,255,0.7); transform: scale(1.02); }
       .glass-btn:active { transform: scale(0.97); transition-duration: 0.1s; }
       .dark .glass-btn {
-        background: rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.04);
         border: 1px solid rgba(255,255,255,0.06);
       }
-      .dark .glass-btn:hover { background: rgba(255,255,255,0.08); }
+      .dark .glass-btn:hover { background: rgba(255,255,255,0.08); transform: scale(1.02); }
 
       .glass-btn-primary {
         background: #B22222;
@@ -157,7 +161,7 @@
       .glass-btn-primary:hover { transform: scale(1.03); }
       .glass-btn-primary:active { transform: scale(0.97); transition-duration: 0.1s; }
       .dark .glass-btn-primary {
-        box-shadow: none;
+        box-shadow: 0 4px 20px rgba(178,34,34,0.3);
       }
 
       .glass-btn-danger {
@@ -181,6 +185,9 @@
       }
       .glass-fab:hover { transform: scale(1.08); }
       .glass-fab:active { transform: scale(0.94); transition-duration: 0.1s; }
+      .dark .glass-fab {
+        box-shadow: 0 6px 28px rgba(178,34,34,0.4);
+      }
 
       /* Tab active */
       .glass-tab-active {
@@ -188,8 +195,8 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       }
       .dark .glass-tab-active {
-        background: rgba(255,255,255,0.08);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        background: rgba(255,255,255,0.07);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
       }
 
       /* Pill badge */
@@ -199,8 +206,8 @@
         border-radius: 9999px;
       }
       .dark .glass-pill {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255,255,255,0.035);
+        border: 1px solid rgba(255,255,255,0.05);
       }
 
       /* Delete button */
@@ -215,7 +222,7 @@
         transition: background-color 0.3s ease;
       }
       .row-hover:hover { background-color: rgba(178,34,34,0.03); }
-      .dark .row-hover:hover { background-color: rgba(178,34,34,0.05); }
+      .dark .row-hover:hover { background-color: rgba(178,34,34,0.06); }
 
       /* ── Animations ── */
       @keyframes fadeInUp {
@@ -283,9 +290,9 @@
         .flatpickr-days, .dayContainer { width: 300px !important; min-width: 300px !important; max-width: 300px !important; }
       }
       .dark .flatpickr-calendar {
-        background: rgba(26,29,46,0.95) !important;
+        background: rgba(15,17,25,0.97) !important;
         border: 1px solid rgba(255,255,255,0.06) !important;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+        box-shadow: 0 12px 48px rgba(0,0,0,0.5) !important;
       }
       .flatpickr-day { max-width: 36px !important; height: 36px !important; line-height: 36px !important; border-radius: 50% !important; margin: 2px !important; }
       @media (min-width: 640px) { .flatpickr-day { max-width: 39px !important; height: 39px !important; line-height: 39px !important; } }
@@ -328,7 +335,7 @@
 </script>
 </head>
   <body class="transition-colors duration-200">
-    <script>if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('meta-theme').setAttribute('content','#0f1117')}</script>
+    <script>if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('meta-theme').setAttribute('content','#08090d')}</script>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>

@@ -28,7 +28,7 @@ const App: React.FC = () => {
     if (isDarkMode) { document.documentElement.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
     else { document.documentElement.classList.remove('dark'); localStorage.setItem('theme', 'light'); }
     const meta = document.getElementById('meta-theme');
-    if (meta) meta.setAttribute('content', isDarkMode ? '#0f1117' : '#f0f4f8');
+    if (meta) meta.setAttribute('content', isDarkMode ? '#08090d' : '#f0f4f8');
   }, [isDarkMode]);
 
   useEffect(() => {
