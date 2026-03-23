@@ -115,7 +115,7 @@ const App: React.FC = () => {
         <section>
           <div className="flex items-center justify-between mb-4 md:mb-6 a-fade-up a-d2">
             <h2 className="text-lg md:text-2xl font-extrabold tracking-tight">
-              {showHistory ? (activeTab === 'charging' ? 'היסטוריית משמרות' : 'היסטוריית הזמנות') : (activeTab === 'charging' ? 'משמרות קרובות' : 'הזמנות מועדון')}
+              {showHistory ? (activeTab === 'charging' ? 'היסטוריית משמרות' : 'היסטוריית הזמנות') : (activeTab === 'charging' ? 'משמרות טעינה' : 'הזמנות מועדון')}
             </h2>
             <div className="flex items-center gap-2">
               <button onClick={() => { const next = !showHistory; setShowHistory(next); setShowStats(next); }}
