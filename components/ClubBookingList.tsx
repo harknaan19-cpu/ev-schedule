@@ -33,7 +33,7 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
   return (
     <>
       {/* Desktop list */}
-      <div className="hidden md:block glass-card rounded-3xl p-2 a-fade-up a-d2 overflow-x-auto">
+      <div className="hidden md:block glass-card rounded-3xl p-2 a-fade-up a-d2 overflow-hidden">
         <table className="w-full text-right">
           <thead>
             <tr className="text-xs font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-[0.12em] border-b border-slate-200/40 dark:border-white/5">
