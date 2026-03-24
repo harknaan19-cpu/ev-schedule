@@ -47,7 +47,7 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
             <span>מטעין</span><span>מועד</span><span>זמן</span>{!readOnly && <span className="text-center">פעולות</span>}
           </div>
           {shifts.map((shift, i) => (
-            <div key={shift.id} className={`grid ${readOnly ? 'grid-cols-3' : 'grid-cols-4'} items-center px-5 py-4 rounded-2xl row-hover a-fade-up`} style={{ animationDelay: `${(i + 1) * 50}ms` }}>
+            <div key={shift.id} className={`grid ${readOnly ? 'grid-cols-3' : 'grid-cols-4'} items-center px-5 py-3 rounded-2xl row-hover a-fade-up`} style={{ animationDelay: `${(i + 1) * 50}ms` }}>
               <span className="font-bold text-base">{shift.username}</span>
               <div className="flex items-center gap-2">
                 <span className={`${DAY_COLORS[shift.day]} text-[10px] px-2.5 py-1 rounded-full font-bold`}>{DAY_NAMES[shift.day]}</span>
@@ -55,9 +55,9 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
               </div>
               <div className="flex items-center justify-end gap-3 font-mono" dir="ltr">
                 {shift.reminder && <BellIcon reminder={shift.reminder} />}
-                <span className="text-lg font-bold leading-none">{shift.startTime}</span>
+                <span className="text-sm font-bold leading-none">{shift.startTime}</span>
                 <svg className="w-4 h-4 text-slate-300 dark:text-slate-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                <span className="text-lg font-bold leading-none">{shift.endTime}</span>
+                <span className="text-sm font-bold leading-none">{shift.endTime}</span>
               </div>
               {!readOnly && (
                 <div className="flex justify-center">
@@ -74,9 +74,9 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
         {shifts.map((shift, i) => (
-          <div key={shift.id} className="glass-card-subtle p-4 rounded-3xl a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
-            <div className="flex justify-between items-center mb-2.5">
-              <h3 className="font-bold text-lg truncate ml-2">{shift.username}</h3>
+          <div key={shift.id} className="glass-card-subtle p-3 rounded-3xl a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="font-bold text-base truncate ml-2">{shift.username}</h3>
               {!readOnly && (
                 <button onClick={() => setDeleteId(shift.id)} className="p-1.5 text-slate-400 del-btn rounded-full">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
@@ -91,9 +91,9 @@ const ShiftList: React.FC<ShiftListProps> = ({ shifts, readOnly = false }) => {
               <div className="flex items-center gap-1.5">
                 {shift.reminder && <BellIcon reminder={shift.reminder} />}
                 <div className="flex items-center gap-1.5 glass-pill px-2.5 py-1.5" dir="ltr">
-                  <span className="font-mono text-base font-bold leading-none">{shift.startTime}</span>
+                  <span className="font-mono text-sm font-bold leading-none">{shift.startTime}</span>
                   <svg className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                  <span className="font-mono text-base font-bold leading-none">{shift.endTime}</span>
+                  <span className="font-mono text-sm font-bold leading-none">{shift.endTime}</span>
                 </div>
               </div>
             </div>

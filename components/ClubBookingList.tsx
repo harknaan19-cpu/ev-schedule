@@ -50,20 +50,20 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
           <tbody>
             {bookings.map((b, i) => (
               <tr key={b.id} className="row-hover rounded-2xl a-fade-up" style={{ animationDelay: `${(i + 1) * 50}ms` }}>
-                <td className="px-5 py-4 font-bold text-base">{b.name}</td>
-                <td className="px-3 py-4 font-semibold text-slate-500 dark:text-slate-400">{b.apartment}</td>
-                <td className="px-3 py-4">
+                <td className="px-5 py-3 font-bold text-base">{b.name}</td>
+                <td className="px-3 py-3 font-semibold text-slate-500 dark:text-slate-400">{b.apartment}</td>
+                <td className="px-3 py-3">
                   <div className="flex items-center gap-2">
                     <span className={`${DAY_COLORS[b.day]} text-[10px] px-2.5 py-1 rounded-full font-bold whitespace-nowrap`}>{DAY_NAMES[b.day]}</span>
                     <span className="text-slate-500 dark:text-slate-400 font-semibold text-sm whitespace-nowrap">{b.scheduledDate}</span>
                   </div>
                 </td>
-                <td className="px-3 py-4 font-semibold text-slate-500 dark:text-slate-400 text-center">{b.chairs}</td>
-                <td className="px-3 py-4 font-semibold text-slate-500 dark:text-slate-400 text-center">{b.tables}</td>
-                <td className="px-3 py-4 text-center">{b.clubReserved ? <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full text-xs whitespace-nowrap">שמור ✓</span> : <span className="text-slate-300 dark:text-slate-600 text-xs">—</span>}</td>
-                <td className="px-3 py-4 text-sm text-slate-400 font-medium max-w-[140px] truncate">{b.note ? <span className="flex items-center gap-1"><svg className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>{b.note}</span> : '—'}</td>
+                <td className="px-3 py-3 font-semibold text-slate-500 dark:text-slate-400 text-center">{b.chairs}</td>
+                <td className="px-3 py-3 font-semibold text-slate-500 dark:text-slate-400 text-center">{b.tables}</td>
+                <td className="px-3 py-3 text-center">{b.clubReserved ? <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full text-xs whitespace-nowrap">שמור ✓</span> : <span className="text-slate-300 dark:text-slate-600 text-xs">—</span>}</td>
+                <td className="px-3 py-3 text-sm text-slate-400 font-medium max-w-[140px] truncate">{b.note ? <span className="flex items-center gap-1"><svg className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>{b.note}</span> : '—'}</td>
                 {!readOnly && (
-                  <td className="px-3 py-4 text-center">
+                  <td className="px-3 py-3 text-center">
                     <button onClick={() => setDeleteId(b.id)} className="p-2 text-slate-400 rounded-full del-btn">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     </button>
@@ -78,11 +78,11 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
         {bookings.map((b, i) => (
-          <div key={b.id} className="glass-card-subtle p-4 rounded-3xl a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
-            <div className="flex justify-between items-center mb-2.5">
-              <div>
-                <h3 className="font-bold text-lg">{b.name}</h3>
-                <span className="text-sm font-semibold text-slate-400">דירה {b.apartment}</span>
+          <div key={b.id} className="glass-card-subtle p-3 rounded-3xl a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-base">{b.name}</h3>
+                <span className="text-sm font-semibold text-slate-400">· דירה {b.apartment}</span>
               </div>
               {!readOnly && (
                 <button onClick={() => setDeleteId(b.id)} className="p-1.5 text-slate-400 del-btn rounded-full">
