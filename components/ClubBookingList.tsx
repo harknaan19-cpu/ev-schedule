@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ClubBooking } from '../types';
 import { DAY_NAMES } from '../utils/dateTime';
 import { ref, remove, db } from '../firebase';
+import SwipeDelete from './SwipeDelete';
 
 interface ClubBookingListProps { bookings: ClubBooking[]; readOnly?: boolean; }
 
@@ -77,32 +78,36 @@ const ClubBookingList: React.FC<ClubBookingListProps> = ({ bookings, readOnly = 
 
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
-        {bookings.map((b, i) => (
-          <div key={b.id} className="glass-card-subtle p-3 rounded-3xl a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>
-            <div className="flex justify-between items-center mb-2">
-              <div className="flex items-center gap-2">
-                <h3 className="font-bold text-base">{b.name}</h3>
-                <span className="text-sm font-semibold text-slate-400">· דירה {b.apartment}</span>
+        {bookings.map((b, i) => {
+          const card = (
+            <div className="glass-card-subtle p-3 rounded-3xl">
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                  <h3 className="font-bold text-base">{b.name}</h3>
+                  <span className="text-sm font-semibold text-slate-400">· דירה {b.apartment}</span>
+                </div>
               </div>
-              {!readOnly && (
-                <button onClick={() => setDeleteId(b.id)} className="p-1.5 text-slate-400 del-btn rounded-full">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                </button>
-              )}
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2 overflow-hidden">
+                  <span className={`${DAY_COLORS[b.day]} text-xs px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap`}>{DAY_NAMES[b.day]}</span>
+                  <span className="text-slate-400 text-sm font-semibold whitespace-nowrap">{b.scheduledDate}</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
+                  <span className="font-bold">{b.chairs} כסאות</span><span className="text-slate-400">·</span><span className="font-bold">{b.tables} שולחנות</span><span className="text-slate-400">·</span>
+                  <span>{b.clubReserved ? <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded-full">שמור</span> : <span className="text-rose-500 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 px-1.5 py-0.5 rounded-full">ללא שיריון</span>}</span>
+                </div>
+              </div>
+              {b.note && <div className="text-sm text-amber-700 dark:text-amber-300 font-medium mt-1.5 flex items-center gap-1 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1.5 rounded-full"><svg className="w-3 h-3 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>{b.note}</div>}
             </div>
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2 overflow-hidden">
-                <span className={`${DAY_COLORS[b.day]} text-xs px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap`}>{DAY_NAMES[b.day]}</span>
-                <span className="text-slate-400 text-sm font-semibold whitespace-nowrap">{b.scheduledDate}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
-                <span className="font-bold">{b.chairs} כסאות</span><span className="text-slate-400">·</span><span className="font-bold">{b.tables} שולחנות</span><span className="text-slate-400">·</span>
-                <span>{b.clubReserved ? <span className="text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded-full">שמור</span> : <span className="text-rose-500 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 px-1.5 py-0.5 rounded-full">ללא שיריון</span>}</span>
-              </div>
-            </div>
-            {b.note && <div className="text-sm text-amber-700 dark:text-amber-300 font-medium mt-1.5 flex items-center gap-1 bg-amber-50 dark:bg-amber-500/10 px-2.5 py-1.5 rounded-full"><svg className="w-3 h-3 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>{b.note}</div>}
-          </div>
-        ))}
+          );
+          return readOnly ? (
+            <div key={b.id} className="a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>{card}</div>
+          ) : (
+            <SwipeDelete key={b.id} onDelete={() => setDeleteId(b.id)}>
+              <div className="a-fade-up" style={{ animationDelay: `${i * 60}ms` }}>{card}</div>
+            </SwipeDelete>
+          );
+        })}
       </div>
 
       {/* Delete confirmation */}
