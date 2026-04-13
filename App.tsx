@@ -193,8 +193,8 @@ const App: React.FC = () => {
 
       {/* Bottom bar */}
       {!showHistory && (
-        <div className="fixed bottom-0 inset-x-0 z-40" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
-          <div className="relative max-w-5xl mx-auto px-4 pb-4">
+        <div className="fixed bottom-0 inset-x-0 z-40">
+          <div className="relative max-w-5xl mx-auto px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
             {/* Plus button */}
             <div className="absolute left-1/2 -translate-x-1/2 -top-8 z-10">
               <button onClick={() => setIsModalOpen(true)}
