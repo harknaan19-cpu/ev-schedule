@@ -91,7 +91,7 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <main className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 py-5 md:py-8">
+      <main className="relative z-10 max-w-5xl mx-auto px-4 md:px-6 py-5 md:py-8 pb-28">
         <section>
           <div className="flex items-center justify-between mb-4 md:mb-6 a-fade-up a-d2">
             <h2 className="text-lg md:text-2xl font-extrabold tracking-tight">
@@ -191,10 +191,10 @@ const App: React.FC = () => {
         </section>
       </main>
 
-      {/* Bottom bar */}
+      {/* Mobile bottom bar */}
       {!showHistory && (
-        <div className="fixed bottom-0 inset-x-0 z-40">
-          <div className="relative max-w-5xl mx-auto px-4 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+        <div className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-[#111218]" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+          <div className="relative max-w-5xl mx-auto">
             {/* Plus button */}
             <div className="absolute left-1/2 -translate-x-1/2 -top-8 z-10">
               <button onClick={() => setIsModalOpen(true)}
@@ -205,21 +205,21 @@ const App: React.FC = () => {
               </button>
             </div>
             {/* Bar */}
-            <div className="bg-white dark:bg-[#111218] border border-slate-200 dark:border-white/[0.06] rounded-3xl px-1.5 py-1 flex items-center overflow-hidden">
+            <div className="border-t border-slate-200 dark:border-white/[0.06] px-1.5 py-1 flex items-center">
               <button onClick={() => { setActiveTab('charging'); setShowStats(false); }}
-                className={`flex-1 flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 py-1.5 rounded-2xl rounded-bl-none transition-all duration-200 ${
+                className={`flex-1 flex flex-col items-center justify-center gap-1 py-1.5 rounded-2xl rounded-bl-none transition-all duration-200 ${
                   activeTab === 'charging' ? 'text-amber-500 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10' : 'text-slate-400 dark:text-slate-500'
                 }`}>
                 <svg className="w-6 h-6" fill={activeTab === 'charging' ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                <span className="text-xs md:text-sm font-bold">טעינה</span>
+                <span className="text-xs font-bold">טעינה</span>
               </button>
               <div className="w-0 flex-shrink-0" />
               <button onClick={() => { setActiveTab('club'); setShowStats(false); }}
-                className={`flex-1 flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2 py-1.5 rounded-2xl rounded-br-none transition-all duration-200 ${
+                className={`flex-1 flex flex-col items-center justify-center gap-1 py-1.5 rounded-2xl rounded-br-none transition-all duration-200 ${
                   activeTab === 'club' ? 'text-[#B22222] dark:text-[#D44A5A] bg-red-50 dark:bg-red-500/10' : 'text-slate-400 dark:text-slate-500'
                 }`}>
                 <svg className="w-6 h-6" fill={activeTab === 'club' ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                <span className="text-xs md:text-sm font-bold">מועדון</span>
+                <span className="text-xs font-bold">מועדון</span>
               </button>
             </div>
           </div>
