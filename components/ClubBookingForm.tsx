@@ -40,7 +40,13 @@ const ClubBookingForm: React.FC<ClubBookingFormProps> = ({ existingBookings, onS
     if (dateInputRef.current) {
       // @ts-ignore
       flatpickr(dateInputRef.current, {
-        locale: 'he', dateFormat: 'd/m/Y', minDate: 'today', disableMobile: true, animate: true, position: "auto",
+        locale: {
+          firstDayOfWeek: 0,
+          weekdays: { shorthand: ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'], longhand: ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'] },
+          months: { shorthand: ['ינו׳','פבר׳','מרץ','אפר׳','מאי','יוני','יולי','אוג׳','ספט׳','אוק׳','נוב׳','דצמ׳'], longhand: ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'] },
+          rangeSeparator: ' אל ', time_24hr: true,
+        },
+        defaultDate: 'today', dateFormat: 'd/m/Y', minDate: 'today', disableMobile: true, animate: true, position: "auto",
         onChange: (selectedDates: Date[]) => { if (selectedDates.length > 0) { const d = selectedDates[0]; setDate(`${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`); } }
       });
     }
