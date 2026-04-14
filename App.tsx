@@ -193,7 +193,7 @@ const App: React.FC = () => {
 
       {/* Mobile bottom bar */}
       {!showHistory && (
-        <div className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-[#111218]" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+        <div className="fixed bottom-0 inset-x-0 z-40 bg-[rgba(255,255,255,0.6)] dark:bg-[rgba(255,255,255,0.03)] backdrop-blur-2xl" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
           <div className="relative max-w-5xl mx-auto">
             {/* Plus button */}
             <div className="absolute left-1/2 -translate-x-1/2 -top-8 z-10">
