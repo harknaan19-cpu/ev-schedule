@@ -28,7 +28,7 @@ const App: React.FC = () => {
     if (isDarkMode) { document.documentElement.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
     else { document.documentElement.classList.remove('dark'); localStorage.setItem('theme', 'light'); }
     const meta = document.getElementById('meta-theme');
-    if (meta) meta.setAttribute('content', isDarkMode ? '#0a0b0e' : '#f7f9fb');
+    if (meta) meta.setAttribute('content', isDarkMode ? '#060709' : '#f0f4f8');
   }, [isDarkMode]);
 
   useEffect(() => {
@@ -208,7 +208,7 @@ const App: React.FC = () => {
             <div className="border-t border-slate-200 dark:border-white/[0.06] px-1.5 py-1 flex items-center">
               <button onClick={() => { setActiveTab('charging'); setShowStats(false); }}
                 className={`flex-1 flex flex-col items-center justify-center gap-1 py-1.5 rounded-2xl rounded-bl-none transition-all duration-200 ${
-                  activeTab === 'charging' ? 'text-amber-500 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10' : 'text-slate-400 dark:text-slate-500 bg-[rgba(255,255,255,0.6)] dark:bg-[rgba(255,255,255,0.03)]'
+                  activeTab === 'charging' ? 'text-amber-500 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10' : 'text-slate-400 dark:text-slate-500'
                 }`}>
                 <svg className="w-6 h-6" fill={activeTab === 'charging' ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 <span className="text-xs font-bold">טעינה</span>
@@ -216,7 +216,7 @@ const App: React.FC = () => {
               <div className="w-0 flex-shrink-0" />
               <button onClick={() => { setActiveTab('club'); setShowStats(false); }}
                 className={`flex-1 flex flex-col items-center justify-center gap-1 py-1.5 rounded-2xl rounded-br-none transition-all duration-200 ${
-                  activeTab === 'club' ? 'text-[#B22222] dark:text-[#D44A5A] bg-red-50 dark:bg-red-500/10' : 'text-slate-400 dark:text-slate-500 bg-[rgba(255,255,255,0.6)] dark:bg-[rgba(255,255,255,0.03)]'
+                  activeTab === 'club' ? 'text-[#B22222] dark:text-[#D44A5A] bg-red-50 dark:bg-red-500/10' : 'text-slate-400 dark:text-slate-500'
                 }`}>
                 <svg className="w-6 h-6" fill={activeTab === 'club' ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                 <span className="text-xs font-bold">מועדון</span>
