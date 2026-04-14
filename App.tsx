@@ -205,7 +205,7 @@ const App: React.FC = () => {
               </button>
             </div>
             {/* Bar */}
-            <div className="px-1.5 py-1 flex items-center">
+            <div className="px-4 md:px-6 py-1 flex items-center">
               <button onClick={() => { setActiveTab('charging'); setShowStats(false); }}
                 className={`flex-1 flex flex-col items-center justify-center gap-1 py-1.5 rounded-2xl transition-all duration-200 ${
                   activeTab === 'charging' ? 'text-amber-500 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10' : 'text-slate-400 dark:text-slate-500'
