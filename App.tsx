@@ -34,7 +34,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const unsub = onValue(shiftsRef, (snapshot) => {
       const data = snapshot.val();
-      if (data) { const list: Shift[] = Object.entries(data).map(([id, val]: [string, any]) => ({ id, ...val })); list.sort((a, b) => a.timestamp - b.timestamp); setAllShifts(list); }
+      if (data) { const list: Shift[] = Object.entries(data).map(([id, val]: [string, any]) => ({ id, ...val })); list.sort((a, b) => { const ta = getShiftTimes(a.scheduledDate, a.startTime, a.endTime).start.getTime(); const tb = getShiftTimes(b.scheduledDate, b.startTime, b.endTime).start.getTime(); return ta - tb; }); setAllShifts(list); }
       else setAllShifts([]);
       setLoading(false);
     });
