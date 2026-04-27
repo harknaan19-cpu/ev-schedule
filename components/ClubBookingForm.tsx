@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { ClubBooking } from '../types';
 import { set, ref, db } from '../firebase';
 
-const MAX_CHAIRS = 25, MAX_TABLES = 4;
-const CHAIR_OPTIONS = [5, 10, 15, 20, 25];
-const TABLE_OPTIONS = [1, 2, 3, 4];
+const MAX_CHAIRS = 40, MAX_TABLES = 8;
+const CHAIR_OPTIONS = [5, 10, 15, 20, 25, 30, 35, 40];
+const TABLE_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 interface ClubBookingFormProps { existingBookings: ClubBooking[]; onSuccess: () => void; onCancel: () => void; }
 
